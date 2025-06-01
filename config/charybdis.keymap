@@ -446,7 +446,7 @@
     &kp TAB            &kp B              &kp Y              &kp O              &kp U              &kp SQT                                                    &slash_qmark       &kp L              &kp D              &kp W              &kp V                &kp Z
     &mt_lctl_esc LCTRL ESC  &hml LGUI C   &hml LALT I        &hml LCTRL E       &hml LSHFT A       &comma_semi                                                &dot_colon         &hmr RSHFT H       &hmr RCTRL T       &hmr RALT S        &hmr RGUI N          &kp Q
     &dt_shift          &kp G              &kp X              &kp J              &kp K              &excl_pipe                                                 &kp SEMI           &kp R              &kp M              &kp F              &kp P                &mt_rsft_ent RSHFT ENTER
-                                                             &dt_lang           &smart_layer LOWER SPACE &kp LGUI                                              &kp RALT           &smart_layer SYMB BSPC &mo NAV
+                                                             &dt_lang           &smart_layer LOWER SPACE &kp LGUI                                              &kp RALT           &smart_layer SYMB BSPC &mo LOWER
                                                                                 &mkp RCLK          &mkp LCLK                                                  
             >;
         };
@@ -458,7 +458,7 @@
     &kp GRAVE          &kp EXCL           &kp AT             &kp HASH           &kp DLLR           &kp PRCNT                                                  &kp CARET          &kp N7             &kp N8             &kp N9             &kp PLUS             &kp STAR
     &trans             &hml LGUI AMPS     &hml LALT LPAR     &hml LCTRL RPAR    &hml LSHFT UNDER   &kp MINUS                                                  &kp EQUAL          &hmr RSHFT N4      &hmr RCTRL N5      &hmr RALT N6       &hmr RGUI DOT        &kp FSLH
     &trans             &kp PIPE           &kp LBKT           &kp RBKT           &kp LBRC           &kp RBRC                                                   &kp N0             &kp N1             &kp N2             &kp N3             &kp COMMA            &trans
-                                                             &trans             &trans             &trans                                                     &trans             &kp DEL            &trans
+                                                             &trans             &trans             &trans                                                     &trans             &kp DEL            &mo BASE
                                                                                 &trans             &trans                                                     
             >;
         };
