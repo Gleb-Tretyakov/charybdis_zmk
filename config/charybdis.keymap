@@ -77,7 +77,7 @@
 };
 
 /* Оптимизированные глобальные настройки */
-< {
+&lt {
     tapping-term-ms = <200>; // Повышенное значение для удобства
     quick-tap-ms = <150>; // Оптимизировано для быстрого двойного нажатия
     flavor = "balanced";
@@ -299,9 +299,10 @@
         combo_not_equals {
             timeout-ms = <40>;
             key-positions = <8 9>;
-            bindings = <¬_equals>;
+            bindings = <&not_equals>;
             layers = <BASE QWERTY>;
         };
+
         
         /* Специальные функции */
         combo_select_all {
@@ -549,10 +550,11 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LGUI>,
-                       <¯o_tap &kp SPACE>,
-                       <¯o_release &kp LGUI>;
+            bindings = <&macro_press &kp LGUI>,
+                    <&macro_tap &kp SPACE>,
+                    <&macro_release &kp LGUI>;
         };
+
 
         /* Блокировка экрана macOS/Windows */
         lock_screen: lock_screen {
@@ -560,9 +562,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LGUI &kp LCTRL>,
-                       <¯o_tap &kp Q>,
-                       <¯o_release &kp LGUI &kp LCTRL>;
+            bindings = <&macro_press &kp LGUI &kp LCTRL>,
+                       <&macro_tap &kp Q>,
+                       <&macro_release &kp LGUI &kp LCTRL>;
         };
 
         /* Навигация по рабочим столам */
@@ -571,9 +573,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LCTRL>,
-                       <¯o_tap &kp RIGHT>,
-                       <¯o_release &kp LCTRL>;
+            bindings = <&macro_press &kp LCTRL>,
+                       <&macro_tap &kp RIGHT>,
+                       <&macro_release &kp LCTRL>;
         };
 
         prev_desktop: prev_desktop {
@@ -581,9 +583,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LCTRL>,
-                       <¯o_tap &kp LEFT>,
-                       <¯o_release &kp LCTRL>;
+            bindings = <&macro_press &kp LCTRL>,
+                       <&macro_tap &kp LEFT>,
+                       <&macro_release &kp LCTRL>;
         };
 
         /* Улучшенный оконный менеджмент */
@@ -592,9 +594,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LGUI>,
-                       <¯o_tap &kp UP>,
-                       <¯o_release &kp LGUI>;
+            bindings = <&macro_press &kp LGUI>,
+                       <&macro_tap &kp UP>,
+                       <&macro_release &kp LGUI>;
         };
 
         win_full: window_fullscreen {
@@ -602,9 +604,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LCTRL &kp LGUI>,
-                       <¯o_tap &kp F>,
-                       <¯o_release &kp LCTRL &kp LGUI>;
+            bindings = <&macro_press &kp LCTRL &kp LGUI>,
+                       <&macro_tap &kp F>,
+                       <&macro_release &kp LCTRL &kp LGUI>;
         };
 
         win_reset: window_reset {
@@ -612,9 +614,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LGUI>,
-                       <¯o_tap &kp DOWN>,
-                       <¯o_release &kp LGUI>;
+            bindings = <&macro_press &kp LGUI>,
+                       <&macro_tap &kp DOWN>,
+                       <&macro_release &kp LGUI>;
         };
 
         win_left: window_left {
@@ -622,9 +624,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LGUI>,
-                       <¯o_tap &kp LEFT>,
-                       <¯o_release &kp LGUI>;
+            bindings = <&macro_press &kp LGUI>,
+                       <&macro_tap &kp LEFT>,
+                       <&macro_release &kp LGUI>;
         };
 
         win_right: window_right {
@@ -632,9 +634,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LGUI>,
-                       <¯o_tap &kp RIGHT>,
-                       <¯o_release &kp LGUI>;
+            bindings = <&macro_press &kp LGUI>,
+                       <&macro_tap &kp RIGHT>,
+                       <&macro_release &kp LGUI>;
         };
 
         /* Улучшенные скриншоты */
@@ -643,9 +645,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LGUI &kp LSHFT>,
-                       <¯o_tap &kp S>,
-                       <¯o_release &kp LGUI &kp LSHFT>;
+            bindings = <&macro_press &kp LGUI &kp LSHFT>,
+                       <&macro_tap &kp S>,
+                       <&macro_release &kp LGUI &kp LSHFT>;
         };
 
         screenshot_full: screenshot_full {
@@ -653,9 +655,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LGUI &kp LSHFT>,
-                       <¯o_tap &kp N3>,
-                       <¯o_release &kp LGUI &kp LSHFT>;
+            bindings = <&macro_press &kp LGUI &kp LSHFT>,
+                       <&macro_tap &kp N3>,
+                       <&macro_release &kp LGUI &kp LSHFT>;
         };
 
         /* Улучшенные действия выделения */
@@ -664,11 +666,11 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LCTRL>,
-                       <¯o_tap &kp RIGHT>,
-                       <¯o_press &kp LSHFT>,
-                       <¯o_tap &kp LEFT>,
-                       <¯o_release &kp LCTRL &kp LSHFT>;
+            bindings = <&macro_press &kp LCTRL>,
+                       <&macro_tap &kp RIGHT>,
+                       <&macro_press &kp LSHFT>,
+                       <&macro_tap &kp LEFT>,
+                       <&macro_release &kp LCTRL &kp LSHFT>;
         };
         
         select_line: select_line {
@@ -676,10 +678,10 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp HOME>,
-                       <¯o_press &kp LSHFT>,
-                       <¯o_tap &kp END>,
-                       <¯o_release &kp LSHFT>;
+            bindings = <&macro_tap &kp HOME>,
+                       <&macro_press &kp LSHFT>,
+                       <&macro_tap &kp END>,
+                       <&macro_release &kp LSHFT>;
         };
 
         select_all: select_all {
@@ -687,9 +689,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LCTRL>,
-                       <¯o_tap &kp A>,
-                       <¯o_release &kp LCTRL>;
+            bindings = <&macro_press &kp LCTRL>,
+                       <&macro_tap &kp A>,
+                       <&macro_release &kp LCTRL>;
         };
 
         /* Расширенные символы программирования */
@@ -698,7 +700,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp MINUS &kp GT>;
+            bindings = <&macro_tap &kp MINUS &kp GT>;
         };
         
         fat_arrow_macro: fat_arrow_macro {
@@ -706,7 +708,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp EQUAL &kp GT>;
+            bindings = <&macro_tap &kp EQUAL &kp GT>;
         };
 
         triple_equals: triple_equals {
@@ -714,7 +716,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp EQUAL &kp EQUAL &kp EQUAL>;
+            bindings = <&macro_tap &kp EQUAL &kp EQUAL &kp EQUAL>;
         };
 
         not_equals: not_equals {
@@ -722,7 +724,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp EXCL &kp EQUAL>;
+            bindings = <&macro_tap &kp EXCL &kp EQUAL>;
         };
 
         not_equals_strict: not_equals_strict {
@@ -730,7 +732,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp EXCL &kp EQUAL &kp EQUAL>;
+            bindings = <&macro_tap &kp EXCL &kp EQUAL &kp EQUAL>;
         };
         
         /* Vim команды */
@@ -739,10 +741,10 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp ESC>,
-                       <¯o_tap &kp COLON>,
-                       <¯o_tap &kp W>,
-                       <¯o_tap &kp ENTER>;
+            bindings = <&macro_tap &kp ESC>,
+                       <&macro_tap &kp COLON>,
+                       <&macro_tap &kp W>,
+                       <&macro_tap &kp ENTER>;
         };
 
         vim_exit_insert: vim_exit_insert {
@@ -750,7 +752,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp ESC>;
+            bindings = <&macro_tap &kp ESC>;
         };
 
         vim_save_quit: vim_save_quit {
@@ -758,11 +760,11 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp ESC>,
-                       <¯o_tap &kp COLON>,
-                       <¯o_tap &kp W>,
-                       <¯o_tap &kp Q>,
-                       <¯o_tap &kp ENTER>;
+            bindings = <&macro_tap &kp ESC>,
+                       <&macro_tap &kp COLON>,
+                       <&macro_tap &kp W>,
+                       <&macro_tap &kp Q>,
+                       <&macro_tap &kp ENTER>;
         };
 
         /* Действия копирования/вставки */
@@ -771,13 +773,13 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp HOME>,
-                       <¯o_press &kp LSHFT>,
-                       <¯o_tap &kp END>,
-                       <¯o_release &kp LSHFT>,
-                       <¯o_press &kp LCTRL>,
-                       <¯o_tap &kp C>,
-                       <¯o_release &kp LCTRL>;
+            bindings = <&macro_tap &kp HOME>,
+                       <&macro_press &kp LSHFT>,
+                       <&macro_tap &kp END>,
+                       <&macro_release &kp LSHFT>,
+                       <&macro_press &kp LCTRL>,
+                       <&macro_tap &kp C>,
+                       <&macro_release &kp LCTRL>;
         };
 
         duplicate_line: duplicate_line {
@@ -785,18 +787,18 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp HOME>,
-                       <¯o_press &kp LSHFT>,
-                       <¯o_tap &kp END>,
-                       <¯o_release &kp LSHFT>,
-                       <¯o_press &kp LCTRL>,
-                       <¯o_tap &kp C>,
-                       <¯o_release &kp LCTRL>,
-                       <¯o_tap &kp END>,
-                       <¯o_tap &kp ENTER>,
-                       <¯o_press &kp LCTRL>,
-                       <¯o_tap &kp V>,
-                       <¯o_release &kp LCTRL>;
+            bindings = <&macro_tap &kp HOME>,
+                       <&macro_press &kp LSHFT>,
+                       <&macro_tap &kp END>,
+                       <&macro_release &kp LSHFT>,
+                       <&macro_press &kp LCTRL>,
+                       <&macro_tap &kp C>,
+                       <&macro_release &kp LCTRL>,
+                       <&macro_tap &kp END>,
+                       <&macro_tap &kp ENTER>,
+                       <&macro_press &kp LCTRL>,
+                       <&macro_tap &kp V>,
+                       <&macro_release &kp LCTRL>;
         };
 
         /* Программирование */
@@ -805,9 +807,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LCTRL>,
-                       <¯o_tap &kp FSLH>,
-                       <¯o_release &kp LCTRL>;
+            bindings = <&macro_press &kp LCTRL>,
+                       <&macro_tap &kp FSLH>,
+                       <&macro_release &kp LCTRL>;
         };
 
         indent_line: indent_line {
@@ -815,7 +817,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_tap &kp TAB>;
+            bindings = <&macro_tap &kp TAB>;
         };
 
         outdent_line: outdent_line {
@@ -823,9 +825,9 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
-            bindings = <¯o_press &kp LSHFT>,
-                       <¯o_tap &kp TAB>,
-                       <¯o_release &kp LSHFT>;
+            bindings = <&macro_press &kp LSHFT>,
+                       <&macro_tap &kp TAB>,
+                       <&macro_release &kp LSHFT>;
         };
     };
 
