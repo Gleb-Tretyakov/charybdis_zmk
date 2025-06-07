@@ -25,57 +25,6 @@
 #define SCROLL 9    // Слой прокрутки
 #define SNIPE 10    // Слой точного наведения
 
-/* Конфигурация трекбола */
-&trackball_listener {
-    compatible = "zmk,input-behavior-listener";
-    device = &vtrackball;
-    layers = <BASE LOWER SYMB NAV IDE QWERTY GAMING>;
-    evt-type = <INPUT_EV_REL>;
-    x-input-code = <INPUT_REL_X>;
-    y-input-code = <INPUT_REL_Y>;
-    scale-multiplier = <1>;
-    scale-divisor = <1>;
-};
-
-/* Конфигурация точного режима трекбола */
-&trackball_snipe_listener {
-    compatible = "zmk,input-behavior-listener";
-    device = &vtrackball;
-    layers = <SNIPE>;
-    evt-type = <INPUT_EV_REL>;
-    x-input-code = <INPUT_REL_X>;
-    y-input-code = <INPUT_REL_Y>;
-    scale-multiplier = <1>;
-    scale-divisor = <4>; // Снижение скорости для точного наведения
-};
-
-/* Конфигурация прокрутки трекболом */
-&trackball_scroll_listener {
-    compatible = "zmk,input-behavior-listener";
-    device = &vtrackball;
-    layers = <SCROLL>;
-    evt-type = <INPUT_EV_REL>;
-    x-input-code = <INPUT_REL_MISC>;
-    y-input-code = <INPUT_REL_WHEEL>;
-    y-invert;
-    bindings = <&ib_wheel_scaler 1 14>;
-};
-
-/* Масштабирование скорости прокрутки */
-&ib_wheel_scaler {
-    compatible = "zmk,input-behavior-scaler";
-    #binding-cells = <2>;
-    evt-type = <INPUT_EV_REL>;
-    input-code = <INPUT_REL_WHEEL>;
-};
-
-/* Переключение слоя трекбола с автоматическим отключением */
-&ib_toggle_layer {
-    compatible = "zmk,input-behavior-tog-layer";
-    #binding-cells = <1>;
-    time-to-live-ms = <750>; // Автоматически отключает слой через 750мс
-};
-
 /* Оптимизированные глобальные настройки */
 &lt {
     tapping-term-ms = <200>; // Повышенное значение для удобства
