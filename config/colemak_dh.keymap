@@ -290,6 +290,15 @@
             bindings = <&kp EXCL>, <&kp PIPE>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
+
+        // Smart numbers (tap цифра, hold F-клавиша)
+        smart_num: smart_number {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <180>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
     };
 
     macros {
@@ -302,17 +311,6 @@
             bindings = <&macro_press &kp LGUI>,
                        <&macro_tap &kp SPACE>,
                        <&macro_release &kp LGUI>;
-        };
-
-        // Блокировка экрана macOS
-        lock_screen: lock_screen {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <5>;
-            bindings = <&macro_press &kp LGUI &kp LCTRL>,
-                       <&macro_tap &kp Q>,
-                       <&macro_release &kp LGUI &kp LCTRL>;
         };
 
         // Навигация по рабочим столам
@@ -444,19 +442,19 @@
         // Основной слой (Colemak-DH)
         BASE {
             bindings = <
-    &kp GRAVE              &kp N1                 &kp N2                 &kp N3                 &kp N4                 &kp N5                                                             &kp N6                 &kp N7                 &kp N8                 &kp N9                 &kp N0                 &lock_screen
-    &kp TAB                &kp B                  &kp Y                  &kp O                  &kp U                  &kp SQT                                                            &slash_qmark           &kp L                  &kp D                  &kp W                  &kp V                  &kp Z
-    &mt_lctl_esc LCTRL ESC &hml LGUI C            &hml LALT I            &hml LCTRL E           &hml LSHFT A           &comma_semi                                                        &dot_colon             &hmr RSHFT H           &hmr RCTRL T           &hmr RALT S            &hmr RGUI N            &kp Q
-    &dt_shift              &kp G                  &kp X                  &kp J                  &kp K                  &excl_pipe                                                         &kp SEMI               &kp R                  &kp M                  &kp F                  &kp P                  &mt_rsft_ent RSHFT ENTER
-                                                                         &dt_lang               &smart_layer LOWER SPACE &kp LGUI                                                         &kp RALT               &smart_layer SYMB BSPC &mo NAV
-                                                                                                &mkp LCLK              &mkp RCLK
+                                                                                     &smart_num    F1 N1           &smart_num    F2 N2           &smart_num  F3 N3                                              &smart_num  F4 N4              &smart_num    F5 N5           &smart_num   F6 N6                                                   &smart_num    F7 N7           &smart_num  F8 N8              &smart_num  F9 N9           &smart_num  F10 N0          &smart_num  F11 MINUS            &smart_num    F12 EQUAL   
+                                                                                 &kp           VAB             &kp           V               &kp         K                                                  &kp         Y                  &kp           I               &kp          RQT                                                     &slash_qmark                  &kp         I                  &kp         S               &kp         W               &kp         D                    &kp           Z           
+                                                                                 &mt_lctl_esc  LCTRL ESC       &hml          LGUI C          &hml        LALT I                                             &hml        LCTRL E            &hml          LSHFT A         &comma_semi                                                          &dot_colon                    &hmr        RSHFT H            &hmr        RCTRL T         &hmr        RALT S          &hmr        RGUI N               &kp           Q           
+                                                                                 &dt_shift                     &kp           G               &kp         X                                                  &kp         K                  &kp           E               &excl_pipe                                                           &kp           REMI            &kp         APOS               &kp         H               &kp         T               &kp         APOS                 &mt_rsft_ent  RSHFT ENTER 
+                                                                                 &dt_lang                      &smart_layer  LOWER SPACE     &kp         IGUI                                               &kp         APOSALT            &smart_layer  SYMB BSPC       &mo          NAV                                                     
+                                                                                 &mkp          RCLK            &mkp          LCLK                                                              
             >;
         };
 
         // Цифры, F-клавиши и математика
         LOWER {
             bindings = <
-    &kp F1             &kp F2             &kp F3             &kp F4             &kp F5             &kp F6                                                     &kp F7             &kp F8             &kp F9             &kp F10            &kp F11              &kp F12
+    &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &trans             &trans             &trans               &trans
     &kp GRAVE          &kp EXCL           &kp AT             &kp HASH           &kp DLLR           &kp PRCNT                                                  &kp CARET          &kp N7             &kp N8             &kp N9             &kp PLUS             &kp STAR
     &trans             &hml LGUI AMPS     &hml LALT LPAR     &hml LCTRL RPAR    &hml LSHFT UNDER   &kp MINUS                                                  &kp EQUAL          &hmr RSHFT N4      &hmr RCTRL N5      &hmr RALT N6       &hmr RGUI DOT        &kp FSLH
     &trans             &kp PIPE           &kp LBKT           &kp RBKT           &kp LBRC           &kp RBRC                                                   &kp N0             &kp N1             &kp N2             &kp N3             &kp COMMA            &trans
@@ -504,19 +502,19 @@
         // QWERTY слой
         QWERTY {
             bindings = <
-    &kp GRAVE          &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &lock_screen
+    &smart_num F1 N1   &smart_num F2 N2   &smart_num F3 N3   &smart_num F4 N4   &smart_num F5 N5   &smart_num F6 N6                                           &smart_num F7 N7   &smart_num F8 N8   &smart_num F9 N9   &smart_num F10 N0  &smart_num F11 MINUS &smart_num F12 EQUAL
     &kp TAB            &kp Q              &kp W              &kp E              &kp R              &kp T                                                      &kp Y              &kp U              &kp I              &kp O              &kp P                &kp LBKT
     &mt_lctl_esc LCTRL ESC  &hml LGUI A   &hml LALT S        &hml LCTRL D       &hml LSHFT F       &kp G                                                      &kp H              &hmr RSHFT J       &hmr RCTRL K       &hmr RALT L        &hmr RGUI SEMI       &kp SQT
     &dt_shift          &kp Z              &kp X              &kp C              &kp V              &kp B                                                      &kp N              &kp M              &comma_semi        &dot_colon         &kp RBKT             &mt_rsft_ent RSHFT ENTER
                                                              &to BASE           &smart_layer LOWER SPACE &kp LGUI                                              &kp RALT           &smart_layer SYMB BSPC &mo NAV
-                                                                                &mkp LCLK          &mkp RCLK                                                  
+                                                                                &mkp RCLK          &mkp LCLK                                                  
             >;
         };
 
         // Игровой слой (без home row mods)
         GAMING {
             bindings = <
-    &kp GRAVE          &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &lock_screen
+    &kp F1             &kp F2             &kp F3             &kp F4             &kp F5             &kp F6                                                     &kp F7             &kp F8             &kp F9             &kp F10            &kp F11              &kp F12
     &kp TAB            &kp Q              &kp W              &kp E              &kp R              &kp T                                                      &kp Y              &kp U              &kp I              &kp O              &kp P                &kp LBKT
     &kp ESC            &kp A              &kp S              &kp D              &kp F              &kp G                                                      &kp H              &kp J              &kp K              &kp L              &kp SEMI             &kp SQT
     &kp LSHFT          &kp Z              &kp X              &kp C              &kp V              &kp B                                                      &kp N              &kp M              &kp COMMA          &kp DOT            &kp SLASH            &kp RSHFT

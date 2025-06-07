@@ -1,0 +1,247 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/mouse.h>
+
+#define BASE 0
+#define LOWER 1
+#define SYMB 2
+#define NAV 3
+#define ADJUST 4
+#define QWERTY 5
+#define GAMING 6
+#define MOUSE 7
+
+// Глобальные настройки таймингов
+&lt {
+    tapping-term-ms = <180>;
+    quick-tap-ms = <120>;
+    flavor = "balanced";
+};
+
+&mt {
+    tapping-term-ms = <190>;
+    quick-tap-ms = <120>;
+    flavor = "balanced";
+};
+
+&sk {
+    release-after-ms = <1500>;
+    quick-release;
+};
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+        
+        combo_esc {
+            timeout-ms = <40>;
+            key-positions = <13 14>;
+            bindings = <&kp ESC>;
+            layers = <BASE QWERTY>;
+        };
+        
+        combo_tab {
+            timeout-ms = <40>;
+            key-positions = <25 26>;
+            bindings = <&kp TAB>;
+            layers = <BASE QWERTY>;
+        };
+        
+        combo_del {
+            timeout-ms = <40>;
+            key-positions = <21 22>;
+            bindings = <&kp DEL>;
+            layers = <BASE QWERTY>;
+        };
+    };
+
+    behaviors {
+        // Home row mods
+        hml: homerow_mods_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 39 40 41 42 43>;
+            hold-trigger-on-release;
+        };
+
+        hmr: homerow_mods_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38>;
+            hold-trigger-on-release;
+        };
+        
+        // Mod morphs
+        comma_semi: comma_semicolon {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp COMMA>, <&kp SEMICOLON>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        dot_colon: dot_colon {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp DOT>, <&kp COLON>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        
+        slash_qmark: slash_question {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH>, <&kp QMARK>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        // Tap dance
+        dt_shift: dt_shift {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&sk LSHFT>, <&caps_word>, <&kp CAPS>;
+        };
+
+        dt_lang: dt_lang {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&kp LG(SPACE)>, <&to QWERTY>, <&to GAMING>;
+        };
+    };
+
+    macros {
+        arrow_macro: arrow_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <5>;
+            bindings = <&macro_tap &kp MINUS &kp GT>;
+        };
+        
+        fat_arrow_macro: fat_arrow_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <5>;
+            bindings = <&macro_tap &kp EQUAL &kp GT>;
+        };
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <LOWER SYMB>;
+            then-layer = <ADJUST>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // Основной слой
+        BASE {
+            bindings = <
+    &kp F1    &kp F2   &kp F3   &kp F4   &kp F5   &kp F6                    &kp F7   &kp F8   &kp F9    &kp F10  &kp F11  &kp F12
+    &kp TAB   &kp Q    &kp W    &kp E    &kp R    &kp T                     &kp Y    &kp U    &kp I     &kp O    &kp P    &kp BSPC
+    &kp ESC   &hml LGUI A    &hml LALT S    &hml LCTRL D    &hml LSHFT F    &kp G    &kp H    &hmr RSHFT J    &hmr RCTRL K    &hmr RALT L    &slash_qmark &kp SQT
+    &dt_shift &kp Z    &kp X    &kp C    &kp V    &kp B                     &kp N    &kp M    &comma_semi    &dot_colon  &kp FSLH &kp RSHFT
+                               &kp LCTRL &mo LOWER &kp LGUI                  &kp RALT &mo SYMB &bt BT_CLR
+                                        &mkp LCLK &mkp RCLK
+            >;
+        };
+
+        // LOWER слой (цифры)
+        LOWER {
+            bindings = <
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &trans    &trans   &trans   &trans
+    &kp GRAVE &kp EXCL &kp AT   &kp HASH &kp DLLR &kp PRCNT                 &kp CARET &kp N7  &kp N8    &kp N9   &kp PLUS &kp STAR
+    &trans    &kp AMPS &kp LPAR &kp RPAR &kp UNDER&kp MINUS                 &kp EQUAL &kp N4  &kp N5    &kp N6   &kp DOT  &kp FSLH
+    &trans    &kp PIPE &kp LBKT &kp RBKT &kp LBRC &kp RBRC                  &kp N0    &kp N1  &kp N2    &kp N3   &kp COMMA&trans
+                               &trans    &trans    &trans                   &trans    &trans   &trans
+                                        &trans    &trans
+            >;
+        };
+
+        // SYMB слой (символы)
+        SYMB {
+            bindings = <
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &trans    &trans   &trans   &trans
+    &kp TILDE &kp EXCL &kp LT   &kp GT   &kp DQT  &kp PIPE                  &kp AMPS &kp UNDER&kp LBKT  &kp RBKT &kp PRCNT&kp BSPC
+    &kp GRAVE &kp AT   &kp MINUS&kp PLUS &kp EQUAL&kp HASH                  &kp PIPE &kp COLON&kp LPAR  &kp RPAR &kp QMARK&kp SQT
+    &trans    &kp CARET&kp FSLH &kp STAR &kp BSLH &trans                    &kp TILDE&kp DLLR &kp LBRC  &kp RBRC &kp AT   &trans
+                               &trans    &trans    &trans                   &trans   &trans   &trans
+                                        &trans    &trans
+            >;
+        };
+
+        // NAV слой (навигация)
+        NAV {
+            bindings = <
+    &trans    &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans   &trans   &trans    &trans   &trans   &trans
+    &trans    &bt BT_CLR   &trans       &trans       &trans       &out OUT_TOG  &trans   &kp C_VOL_UP &kp C_MUTE &kp C_VOL_DN &trans   &trans
+    &trans    &trans       &trans       &trans       &trans       &trans       &kp LEFT &kp DOWN &kp UP    &kp RIGHT&trans   &trans
+    &trans    &bootloader  &sys_reset   &trans       &trans       &trans       &kp HOME &kp PG_DN&kp PG_UP &kp END  &trans   &trans
+                               &to BASE  &trans      &trans                   &trans   &trans   &to BASE
+                                        &trans      &trans
+            >;
+        };
+
+        // ADJUST слой (триггерится LOWER+SYMB)
+        ADJUST {
+            bindings = <
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &trans    &trans   &trans   &trans
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &trans    &trans   &trans   &trans
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &trans    &trans   &trans   &trans
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &trans    &trans   &trans   &trans
+                               &trans    &trans    &trans                   &trans   &trans   &trans
+                                        &trans    &trans
+            >;
+        };
+
+        // QWERTY слой
+        QWERTY {
+            bindings = <
+    &kp F1    &kp F2   &kp F3   &kp F4   &kp F5   &kp F6                    &kp F7   &kp F8   &kp F9    &kp F10  &kp F11  &kp F12
+    &kp TAB   &kp Q    &kp W    &kp E    &kp R    &kp T                     &kp Y    &kp U    &kp I     &kp O    &kp P    &kp BSPC
+    &kp ESC   &hml LGUI A    &hml LALT S    &hml LCTRL D    &hml LSHFT F    &kp G    &kp H    &hmr RSHFT J    &hmr RCTRL K    &hmr RALT L    &slash_qmark &kp SQT
+    &dt_shift &kp Z    &kp X    &kp C    &kp V    &kp B                     &kp N    &kp M    &comma_semi    &dot_colon  &kp FSLH &kp RSHFT
+                               &to BASE  &mo LOWER &kp LGUI                  &kp RALT &mo SYMB &bt BT_CLR
+                                        &mkp LCLK &mkp RCLK
+            >;
+        };
+
+        // GAMING слой
+        GAMING {
+            bindings = <
+    &kp F1    &kp F2   &kp F3   &kp F4   &kp F5   &kp F6                    &kp F7   &kp F8   &kp F9    &kp F10  &kp F11  &kp F12
+    &kp TAB   &kp Q    &kp W    &kp E    &kp R    &kp T                     &kp Y    &kp U    &kp I     &kp O    &kp P    &kp BSPC
+    &kp ESC   &kp A    &kp S    &kp D    &kp F    &kp G                     &kp H    &kp J    &kp K     &kp L    &kp SEMI &kp SQT
+    &kp LSHFT &kp Z    &kp X    &kp C    &kp V    &kp B                     &kp N    &kp M    &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+                               &to BASE  &kp SPACE &kp LCTRL                  &kp RALT &kp BSPC &kp ENTER
+                                        &kp LALT  &kp R
+            >;
+        };
+
+        // MOUSE слой
+        MOUSE {
+            bindings = <
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &trans    &trans   &trans   &trans
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &msc SCRL_UP &trans   &trans   &trans
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &trans
+    &trans    &trans   &trans   &trans   &trans   &trans                    &trans   &trans   &msc SCRL_DOWN &trans   &trans   &trans
+                               &tog MOUSE &mkp LCLK &mkp MCLK                  &mkp RCLK &mkp LCLK &tog MOUSE
+                                        &trans    &trans
+            >;
+        };
+    };
+}; 

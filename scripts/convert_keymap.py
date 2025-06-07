@@ -82,7 +82,7 @@ def main():
     #####################################################################
 
     def convert_keymap(keymap_contents):   
-        # Define regex pattern to find the 'Base' keymap section
+        # Define regex pattern to find the 'BASE' keymap section
         base_keymap_pattern = re.compile(r'(BASE\s*\{\s*bindings\s*=\s*<\s*)(.*?)(\s*>;)', re.DOTALL)     
         # Apply regex substitution to convert keymap
         new_keymap_contents = base_keymap_pattern.sub(replace_keymap, keymap_contents)
@@ -103,26 +103,15 @@ def main():
         new_lines = []
         print(">> Converting letter keys")
         for line in lines:
-            # Split the line by spaces or other delimiters
-            parts = line.split()
-            new_parts = []
-
-            for part in parts:
-                if not part.startswith('&'):
-                    # Extract key (removing ZMK behavior commands)
-                    key = part.split()[1] if len(part.split()) > 1 else part
-                    # Map the key to the conversion type if applicable
-                    if key.upper() in initial_keymap:
-                        print(key.upper(),end=":")
-                        new_key = initial_keymap[key]
-                        print(new_key)
-                        new_parts.append(part.replace(key, new_key))
-                    else:
-                        new_parts.append(part)
-                else:
-                    new_parts.append(part)
-            # Join new parts for the line and add to new_lines
-            new_lines.append(' '.join(new_parts))
+            new_line = line
+            # Look for &kp LETTER patterns and replace them
+            for old_key, new_key in initial_keymap.items():
+                pattern = f'&kp {old_key}'
+                replacement = f'&kp {new_key}'
+                if pattern in new_line:
+                    print(f"{old_key} -> {new_key}")
+                    new_line = new_line.replace(pattern, replacement)
+            new_lines.append(new_line)
 
         # Join new lines to form the new keymap keymap_contents
         new_keymap = '\n'.join(new_lines)
