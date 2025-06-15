@@ -39,52 +39,7 @@
 #define SCROLL 9    // Scroll layer
 #define SNIPE 10    // Precision aiming layer
 
-/* Trackball configuration */
-&trackball_listener {
-    compatible = "zmk,input-behavior-listener";
-    device = <&vtrackball>;
-    layers = <BASE LOWER SYMB NAV IDE QWERTY GAMING>;
-    evt-type = <INPUT_EV_REL>;
-    x-input-code = <INPUT_REL_X>;
-    y-input-code = <INPUT_REL_Y>;
-    scale-multiplier = <1>;
-    scale-divisor = <1>;
-};
 
-&trackball_snipe_listener {
-    compatible = "zmk,input-behavior-listener";
-    device = <&vtrackball>;
-    layers = <SNIPE>;
-    evt-type = <INPUT_EV_REL>;
-    x-input-code = <INPUT_REL_X>;
-    y-input-code = <INPUT_REL_Y>;
-    scale-multiplier = <1>;
-    scale-divisor = <4>;
-};
-
-&trackball_scroll_listener {
-    compatible = "zmk,input-behavior-listener";
-    device = <&vtrackball>;
-    layers = <SCROLL>;
-    evt-type = <INPUT_EV_REL>;
-    x-input-code = <INPUT_REL_MISC>;
-    y-input-code = <INPUT_REL_WHEEL>;
-    y-invert;
-    bindings = <&ib_wheel_scaler 1 14>;
-};
-
-&ib_wheel_scaler {
-    compatible = "zmk,input-behavior-scaler";
-    #binding-cells = <2>;
-    evt-type = <INPUT_EV_REL>;
-    input-code = <INPUT_REL_WHEEL>;
-};
-
-&ib_toggle_layer {
-    compatible = "zmk,input-behavior-tog-layer";
-    #binding-cells = <1>;
-    time-to-live-ms = <750>;
-};
 
 /* Optimized global settings */
 &lt {
@@ -167,7 +122,7 @@
             layers = <BASE QWERTY>;
         };
         
-        /* Скобки */
+        /* Brackets */
         combo_lpar {
             timeout-ms = <40>;
             key-positions = <15 16>;
@@ -210,7 +165,7 @@
             layers = <BASE QWERTY>;
         };
         
-        /* Специальные функции */
+        /* Special functions */
         combo_caps_word {
             timeout-ms = <40>;
             key-positions = <16 19>;
@@ -218,7 +173,7 @@
             layers = <BASE QWERTY>;
         };
         
-        /* Редактирование */
+        /* Editing */
         combo_cut {
             timeout-ms = <40>;
             key-positions = <26 27>;
@@ -254,7 +209,7 @@
             layers = <BASE QWERTY>;
         };
         
-        /* Специальные слои */
+        /* Special layers */
         combo_mouse {
             timeout-ms = <50>;
             key-positions = <40 41>;
@@ -262,7 +217,7 @@
             layers = <BASE>;
         };
         
-        /* IDE функции */
+        /* IDE functions */
         combo_ide {
             timeout-ms = <40>;
             key-positions = <14 15>;
@@ -284,7 +239,7 @@
             layers = <BASE QWERTY IDE>;
         };
         
-        /* Частые символы программирования */
+        /* Common programming symbols */
         combo_arrow {
             timeout-ms = <40>;
             key-positions = <20 21>;
@@ -980,8 +935,5 @@
         };
     };
 
-    vtrackball: virtual_input_trackball {
-        compatible = "zmk,virtual-input";
-    };
 };
 
