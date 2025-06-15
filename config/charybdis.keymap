@@ -859,7 +859,7 @@
             bindings = <
 &kp GRAVE          &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &lock_screen
 &tab_esc           &kp Q              &kp W              &kp E              &kp R              &kp T                                                      &kp Y              &kp U              &kp I              &kp O              &kp P                &kp LBKT
-&mt LCTRL ESC          &hml LGUI A        &hml LALT S        &hml LCTRL D       &hml LSHFT F       &kp G                                                      &kp H              &hmr RSHFT J       &hmr RCTRL K       &hmr RALT L        &hmr RGUI SEMI       &kp SQT
+&mt LCTRL ESC         &hml LGUI A        &hml LALT S        &hml LCTRL D       &hml LSHFT F       &kp G                                                      &kp H              &hmr RSHFT J       &hmr RCTRL K       &hmr RALT L        &hmr RGUI SEMI       &kp SQT
 &dt_shift          &kp Z              &kp X              &kp C              &kp V              &kp B                                                      &kp N              &kp M              &comma_semi        &dot_colon         &slash_qmark         &mt RSHFT ENTER
                                                          &to BASE           &smart_layer LOWER SPACE &kp LGUI                                              &kp RALT           &smart_layer SYMB BSPC &mo NAV
                                                                             &mkp LCLK          &mkp RCLK
