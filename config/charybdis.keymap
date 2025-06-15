@@ -328,27 +328,7 @@
             global-quick-tap;
         };
         
-        /* Enhanced Ctrl/Esc */
-        mt_lctl_esc: mod_tap_ctrl_esc {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <150>;
-            flavor = "balanced";
-            bindings = <&kp>, <&kp>;
-            retro-tap;
-        };
 
-        /* Enhanced Shift/Enter */
-        mt_rsft_ent: mod_tap_shift_enter {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <150>;
-            flavor = "balanced";
-            bindings = <&kp>, <&kp>;
-            retro-tap;
-        };
 
         /* Enhanced Sticky Shift */
         ss: sticky_shift {
@@ -807,8 +787,8 @@
             bindings = <
 &kp GRAVE              &kp N1                 &kp N2                 &kp N3                 &kp N4                 &kp N5                                                             &kp N6                 &kp N7                 &kp N8                 &kp N9                 &kp N0                 &lock_screen
 &tab_esc               &kp B                  &kp Y                  &kp O                  &kp U                  &kp SQT                                                            &slash_qmark           &kp L                  &kp D                  &kp W                  &kp V                  &kp Z
-&mt_lctl_esc LCTRL ESC &hml LGUI C            &hml LALT I            &hml LCTRL E           &hml LSHFT A           &comma_semi                                                        &dot_colon             &hmr RSHFT H           &hmr RCTRL T           &hmr RALT S            &hmr RGUI N            &kp Q
-&dt_shift              &kp G                  &kp X                  &kp J                  &kp K                  &excl_pipe                                                         &semi_colon            &kp R                  &kp M                  &kp F                  &kp P                  &mt_rsft_ent RSHFT ENTER
+&mt LCTRL ESC         &hml LGUI C            &hml LALT I            &hml LCTRL E           &hml LSHFT A           &comma_semi                                                        &dot_colon             &hmr RSHFT H           &hmr RCTRL T           &hmr RALT S            &hmr RGUI N            &kp Q
+&dt_shift              &kp G                  &kp X                  &kp J                  &kp K                  &excl_pipe                                                         &semi_colon            &kp R                  &kp M                  &kp F                  &kp P                  &mt RSHFT ENTER
                                                                      &dt_lang               &smart_layer LOWER SPACE &kp LGUI                                                         &kp RALT               &smart_layer SYMB BSPC &mo NAV
                                                                                             &mkp LCLK              &mkp RCLK
             >;
@@ -879,8 +859,8 @@
             bindings = <
 &kp GRAVE          &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &lock_screen
 &tab_esc           &kp Q              &kp W              &kp E              &kp R              &kp T                                                      &kp Y              &kp U              &kp I              &kp O              &kp P                &kp LBKT
-&mt_lctl_esc LCTRL ESC  &hml LGUI A   &hml LALT S        &hml LCTRL D       &hml LSHFT F       &kp G                                                      &kp H              &hmr RSHFT J       &hmr RCTRL K       &hmr RALT L        &hmr RGUI SEMI       &kp SQT
-&dt_shift          &kp Z              &kp X              &kp C              &kp V              &kp B                                                      &kp N              &kp M              &comma_semi        &dot_colon         &slash_qmark         &mt_rsft_ent RSHFT ENTER
+&mt LCTRL ESC          &hml LGUI A        &hml LALT S        &hml LCTRL D       &hml LSHFT F       &kp G                                                      &kp H              &hmr RSHFT J       &hmr RCTRL K       &hmr RALT L        &hmr RGUI SEMI       &kp SQT
+&dt_shift          &kp Z              &kp X              &kp C              &kp V              &kp B                                                      &kp N              &kp M              &comma_semi        &dot_colon         &slash_qmark         &mt RSHFT ENTER
                                                          &to BASE           &smart_layer LOWER SPACE &kp LGUI                                              &kp RALT           &smart_layer SYMB BSPC &mo NAV
                                                                             &mkp LCLK          &mkp RCLK
             >;
@@ -934,6 +914,5 @@
             >;
         };
     };
-
 };
 
