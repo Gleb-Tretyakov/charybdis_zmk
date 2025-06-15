@@ -1,6 +1,6 @@
 /*
- * Улучшенный ZMK конфиг для Charybdis 4x6
- * С расширенной поддержкой трекбола и оптимизированными слоями
+ * Enhanced ZMK config for Charybdis 4x6
+ * With extended trackball support and optimized layers
  * Copyright (c) 2023-2024 The ZMK Contributors
  * SPDX-License-Identifier: MIT
  */
@@ -12,25 +12,86 @@
 #include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/ext_power.h>
 
-/* Слои клавиатуры */
-#define BASE 0      // Основной слой (Colemak-DH)
-#define LOWER 1     // Цифры, F-клавиши и математика
-#define SYMB 2      // Символы и специальные клавиши
-#define NAV 3       // Навигация и мультимедиа
-#define IDE 4       // Слой для IDE и программирования
-#define ADJUST 5    // Настройки и системные функции
-#define QWERTY 6    // QWERTY слой
-#define GAMING 7    // Игровой слой
-#define MOUSE 8     // Мышиный слой
-#define SCROLL 9    // Слой прокрутки
-#define SNIPE 10    // Слой точного наведения
+/* Input event definitions */
+#define INPUT_EV_KEY 0x01
+#define INPUT_EV_REL 0x02
+#define INPUT_EV_ABS 0x03
+#define INPUT_EV_MSC 0x04
+#define INPUT_EV_VENDOR_START 0xf0
+#define INPUT_EV_VENDOR_STOP 0xff
 
-/* Оптимизированные глобальные настройки */
+#define INPUT_REL_X 0x00
+#define INPUT_REL_Y 0x01
+#define INPUT_REL_WHEEL 0x08
+#define INPUT_REL_HWHEEL 0x06
+#define INPUT_REL_MISC 0x09
+
+/* Keyboard layers */
+#define BASE 0      // Base layer (Colemak-DH)
+#define LOWER 1     // Numbers, F-keys and math
+#define SYMB 2      // Symbols and special keys
+#define NAV 3       // Navigation and multimedia
+#define IDE 4       // IDE and programming layer
+#define ADJUST 5    // Settings and system functions
+#define QWERTY 6    // QWERTY layer
+#define GAMING 7    // Gaming layer
+#define MOUSE 8     // Mouse layer
+#define SCROLL 9    // Scroll layer
+#define SNIPE 10    // Precision aiming layer
+
+/* Trackball configuration */
+&trackball_listener {
+    compatible = "zmk,input-behavior-listener";
+    device = <&vtrackball>;
+    layers = <BASE LOWER SYMB NAV IDE QWERTY GAMING>;
+    evt-type = <INPUT_EV_REL>;
+    x-input-code = <INPUT_REL_X>;
+    y-input-code = <INPUT_REL_Y>;
+    scale-multiplier = <1>;
+    scale-divisor = <1>;
+};
+
+&trackball_snipe_listener {
+    compatible = "zmk,input-behavior-listener";
+    device = <&vtrackball>;
+    layers = <SNIPE>;
+    evt-type = <INPUT_EV_REL>;
+    x-input-code = <INPUT_REL_X>;
+    y-input-code = <INPUT_REL_Y>;
+    scale-multiplier = <1>;
+    scale-divisor = <4>;
+};
+
+&trackball_scroll_listener {
+    compatible = "zmk,input-behavior-listener";
+    device = <&vtrackball>;
+    layers = <SCROLL>;
+    evt-type = <INPUT_EV_REL>;
+    x-input-code = <INPUT_REL_MISC>;
+    y-input-code = <INPUT_REL_WHEEL>;
+    y-invert;
+    bindings = <&ib_wheel_scaler 1 14>;
+};
+
+&ib_wheel_scaler {
+    compatible = "zmk,input-behavior-scaler";
+    #binding-cells = <2>;
+    evt-type = <INPUT_EV_REL>;
+    input-code = <INPUT_REL_WHEEL>;
+};
+
+&ib_toggle_layer {
+    compatible = "zmk,input-behavior-tog-layer";
+    #binding-cells = <1>;
+    time-to-live-ms = <750>;
+};
+
+/* Optimized global settings */
 &lt {
-    tapping-term-ms = <200>; // Повышенное значение для удобства
-    quick-tap-ms = <150>; // Оптимизировано для быстрого двойного нажатия
+    tapping-term-ms = <200>;
+    quick-tap-ms = <150>;
     flavor = "balanced";
-    retro-tap; // Позволяет активировать удерживаемую клавишу при отпускании
+    retro-tap;
 };
 
 &mt {
@@ -41,7 +102,7 @@
 };
 
 &sk {
-    release-after-ms = <1800>; // Увеличенное время для удобства использования
+    release-after-ms = <1800>;
     quick-release;
 };
 
@@ -53,31 +114,31 @@
     combos {
         compatible = "zmk,combos";
         
-        /* Комбо для активации режима прокрутки */
+        /* Combo for scroll mode activation */
         combo_scroll_mode {
             timeout-ms = <50>;
-            key-positions = <41 42>; // Нижние кнопки правой стороны
+            key-positions = <41 42>;
             bindings = <&tog SCROLL>;
             layers = <BASE LOWER SYMB NAV IDE>;
         };
         
-        /* Комбо для активации точного режима */
+        /* Combo for precision mode activation */
         combo_snipe_mode {
             timeout-ms = <50>;
-            key-positions = <42 43>; // Нижние кнопки правой стороны
+            key-positions = <42 43>;
             bindings = <&mo SNIPE>;
             layers = <BASE LOWER SYMB NAV IDE>;
         };
         
-        /* Быстрое переключение между режимами */
+        /* Quick switching between modes */
         combo_reset_mouse_modes {
             timeout-ms = <50>;
-            key-positions = <40 43>; // Крайние нижние кнопки
+            key-positions = <40 43>;
             bindings = <&to BASE>;
             layers = <SCROLL SNIPE MOUSE>;
         };
         
-        /* Основные комбо */
+        /* Main combos */
         combo_esc {
             timeout-ms = <40>;
             key-positions = <13 14>;
@@ -253,7 +314,7 @@
         };
 
         
-        /* Специальные функции */
+        /* Special functions */
         combo_select_all {
             timeout-ms = <40>;
             key-positions = <1 2>;
@@ -269,7 +330,7 @@
         };
     };
     
-    /* Условные слои */
+    /* Conditional layers */
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
@@ -279,7 +340,7 @@
     };
 
     behaviors {
-        /* Tap Dance для переключения режимов трекбола */
+        /* Tap Dance for trackball mode switching */
         tb_mode: trackball_mode {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -287,7 +348,7 @@
             bindings = <&tog MOUSE>, <&tog SCROLL>, <&tog SNIPE>;
         };
 
-        /* Улучшенные home row mods с контекстно-зависимыми модификаторами */
+        /* Enhanced home row mods with context-dependent modifiers */
         hml: homerow_mods_left {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -297,7 +358,7 @@
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 39 40 41 42 43>;
             hold-trigger-on-release;
-            global-quick-tap; // Позволяет быстро набирать текст
+            global-quick-tap;
         };
 
         hmr: homerow_mods_right {
@@ -312,7 +373,7 @@
             global-quick-tap;
         };
         
-        /* Улучшенный Ctrl/Esc */
+        /* Enhanced Ctrl/Esc */
         mt_lctl_esc: mod_tap_ctrl_esc {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -323,7 +384,7 @@
             retro-tap;
         };
 
-        /* Улучшенный Shift/Enter */
+        /* Enhanced Shift/Enter */
         mt_rsft_ent: mod_tap_shift_enter {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -334,17 +395,17 @@
             retro-tap;
         };
 
-        /* Улучшенный Sticky Shift */
+        /* Enhanced Sticky Shift */
         ss: sticky_shift {
             compatible = "zmk,behavior-sticky-key";
             #binding-cells = <1>;
             bindings = <&kp>;
             release-after-ms = <1500>;
             quick-release;
-            ignore-modifiers; // Игнорирует уже нажатые модификаторы
+            ignore-modifiers;
         };
         
-        /* Интеллектуальный слой/клавиша */
+        /* Smart layer/key */
         smart_layer: smart_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -355,7 +416,7 @@
             retro-tap;
         };
 
-        /* Интеллектуальный переключатель слоев */
+        /* Smart layer switcher */
         smart_to: smart_to_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -365,22 +426,22 @@
             bindings = <&to>, <&to>;
         };
 
-        /* Tap Dance для множественных функций */
+        /* Tap Dance for multiple functions */
         dt_lang: tap_dance_language {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <300>; // Увеличенное время для удобства использования
+            tapping-term-ms = <300>;
             bindings = <&lang_switch>, <&to QWERTY>, <&to GAMING>;
         };
         
         dt_shift: tap_dance_shift {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <250>; // Увеличенное время для удобства использования
+            tapping-term-ms = <250>;
             bindings = <&ss LSHFT>, <&caps_word>, <&kp CAPS>;
         };
 
-        /* Быстрый доступ к IDE функциям */
+        /* Quick access to IDE functions */
         dt_ide: tap_dance_ide {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -388,7 +449,7 @@
             bindings = <&mo IDE>, <&tog IDE>;
         };
 
-        /* Mod morphs для символов */
+        /* Mod morphs for symbols */
         comma_semi: comma_semicolon {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -417,7 +478,7 @@
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        /* Mod morph для точки с запятой и двоеточия */
+        /* Mod morph for semicolon and colon */
         semi_colon: semicolon_colon {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -425,7 +486,7 @@
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        /* Mod morph для скобок */
+        /* Mod morph for brackets */
         lpar_lt: left_paren_lt {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -440,7 +501,7 @@
             mods = <(MOD_LALT|MOD_RALT)>;
         };
 
-        /* Адаптивное табулирование */
+        /* Adaptive tabulation */
         tab_esc: tab_escape {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -448,7 +509,7 @@
             mods = <(MOD_LCTL|MOD_RCTL)>;
         };
 
-        /* Автоматический выход из редактирования */
+        /* Automatic exit from editing */
         vim_exit: vim_exit_macro {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -456,7 +517,9 @@
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        /* Улучшенная работа с окнами */
+
+
+        /* Enhanced window management */
         win_mgmt: window_management {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -464,7 +527,7 @@
             bindings = <&win_max>, <&win_full>, <&win_reset>;
         };
         
-        /* Интеллектуальное переключение раскладки */
+        /* Smart language switching */
         smart_lang: smart_language {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -472,7 +535,7 @@
             bindings = <&lang_switch>, <&none>, <&to BASE>;
         };
         
-        /* Контекстно-зависимое пространство */
+        /* Context-dependent space */
         spc_mod: space_modifier {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -480,7 +543,7 @@
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
         
-        /* Быстрая смена между программными слоями */
+        /* Quick switching between programming layers */
         dev_cycle: developer_cycle {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -491,9 +554,9 @@
 
 
 
-    /* Макросы для различных функций */
+    /* Macros for various functions */
     macros {
-        /* Переключение языка */
+        /* Language switching */
         lang_switch: lang_switch {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -505,7 +568,7 @@
         };
 
 
-        /* Блокировка экрана macOS/Windows */
+        /* Screen lock macOS/Windows */
         lock_screen: lock_screen {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -516,7 +579,7 @@
                        <&macro_release &kp LGUI &kp LCTRL>;
         };
 
-        /* Навигация по рабочим столам */
+        /* Desktop navigation */
         next_desktop: next_desktop {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -537,7 +600,7 @@
                        <&macro_release &kp LCTRL>;
         };
 
-        /* Улучшенный оконный менеджмент */
+        /* Enhanced window management */
         win_max: window_maximize {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -588,7 +651,7 @@
                        <&macro_release &kp LGUI>;
         };
 
-        /* Улучшенные скриншоты */
+        /* Enhanced screenshots */
         screenshot: screenshot {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -609,7 +672,7 @@
                        <&macro_release &kp LGUI &kp LSHFT>;
         };
 
-        /* Улучшенные действия выделения */
+        /* Enhanced selection actions */
         select_word: select_word {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -643,7 +706,7 @@
                        <&macro_release &kp LCTRL>;
         };
 
-        /* Расширенные символы программирования */
+        /* Extended programming symbols */
         arrow_macro: arrow_macro {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -684,7 +747,7 @@
             bindings = <&macro_tap &kp EXCL &kp EQUAL &kp EQUAL>;
         };
         
-        /* Vim команды */
+        /* Vim commands */
         vim_save: vim_save {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -716,7 +779,7 @@
                        <&macro_tap &kp ENTER>;
         };
 
-        /* Действия копирования/вставки */
+        /* Copy/paste actions */
         copy_line: copy_line {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -750,7 +813,7 @@
                        <&macro_release &kp LCTRL>;
         };
 
-        /* Программирование */
+        /* Programming */
         comment_line: comment_line {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -780,11 +843,11 @@
         };
     };
 
-    /* Раскладки для разных слоев */
+    /* Layouts for different layers */
     keymap {
         compatible = "zmk,keymap";
 
-        /* Основной слой (Colemak-DH) */
+        /* Base layer (Colemak-DH) */
         BASE {
             bindings = <
 &kp GRAVE              &kp N1                 &kp N2                 &kp N3                 &kp N4                 &kp N5                                                             &kp N6                 &kp N7                 &kp N8                 &kp N9                 &kp N0                 &lock_screen
@@ -796,7 +859,7 @@
             >;
         };
 
-        /* Цифры, F-клавиши и математика */
+        /* Numbers, F-keys and math */
         LOWER {
             bindings = <
 &kp F1             &kp F2             &kp F3             &kp F4             &kp F5             &kp F6                                                     &kp F7             &kp F8             &kp F9             &kp F10            &kp F11              &kp F12
@@ -808,7 +871,7 @@
             >;
         };
 
-        /* Символы и специальные клавиши */
+        /* Symbols and special keys */
         SYMB {
             bindings = <
 &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &trans             &trans             &trans               &trans
@@ -820,7 +883,7 @@
             >;
         };
 
-        /* Навигация, мультимедиа и системные функции */
+        /* Navigation, multimedia and system functions */
         NAV {
             bindings = <
 &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &trans             &trans             &trans               &trans
@@ -832,7 +895,7 @@
             >;
         };
 
-        /* Слой для IDE и программирования */
+        /* IDE and programming layer */
         IDE {
             bindings = <
 &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &trans             &trans             &trans               &trans
@@ -844,7 +907,7 @@
             >;
         };
 
-        /* Настройки, Bluetooth и отладка */
+        /* Settings, Bluetooth and debugging */
         ADJUST {
             bindings = <
 &trans             &bt BT_SEL 0       &bt BT_SEL 1       &bt BT_SEL 2       &bt BT_SEL 3       &bt BT_SEL 4                                               &trans             &trans             &trans             &trans             &trans               &trans
@@ -856,7 +919,7 @@
             >;
         };
 
-        /* QWERTY слой */
+        /* QWERTY layer */
         QWERTY {
             bindings = <
 &kp GRAVE          &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &lock_screen
@@ -868,7 +931,7 @@
             >;
         };
 
-        /* Игровой слой (без home row mods) */
+        /* Gaming layer (without home row mods) */
         GAMING {
             bindings = <
 &kp GRAVE          &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &lock_screen
@@ -880,7 +943,7 @@
             >;
         };
 
-        /* Мышиный слой */
+        /* Mouse layer */
         MOUSE {
             bindings = <
 &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &trans             &trans             &trans               &trans
@@ -892,7 +955,7 @@
             >;
         };
 
-        /* Слой прокрутки */
+        /* Scroll layer */
         SCROLL {
             bindings = <
 &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &trans             &trans             &trans               &trans
@@ -904,7 +967,7 @@
             >;
         };
 
-        /* Слой точного наведения (снайпер) */
+        /* Precision aiming layer (sniper) */
         SNIPE {
             bindings = <
 &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &trans             &trans             &trans               &trans
@@ -916,5 +979,9 @@
             >;
         };
     };
-}
+
+    vtrackball: virtual_input_trackball {
+        compatible = "zmk,virtual-input";
+    };
+};
 
