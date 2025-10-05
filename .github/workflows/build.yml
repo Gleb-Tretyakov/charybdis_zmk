@@ -17,12 +17,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - run: python scripts/convert_keymap.py -c q2c --in-path "$GITHUB_WORKSPACE/config/charybdis.keymap"
+      - run: |
+          # Since BASE layer is now QWERTY, we just need to copy the file
+          cp "$GITHUB_WORKSPACE/config/charybdis.keymap" "$GITHUB_WORKSPACE/qwerty.keymap"
+          echo "Keymap copied without conversion"
 
       - uses: actions/upload-artifact@v4
         with:
           name: keymap_files
-          path: ${{ github.workspace }}/config/*.keymap
+          path: ${{ github.workspace }}/qwerty.keymap
 
   build:
     needs: convert-and-store-keymap
