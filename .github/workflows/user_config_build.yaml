@@ -107,7 +107,7 @@ jobs:
           rm -f $GITHUB_WORKSPACE/config/*.keymap
           mkdir -p "$GITHUB_WORKSPACE/${{ inputs.keymap_path }}/"
           cd "$GITHUB_WORKSPACE"
-          mv charybdis.keymap qwerty.keymap
+          # The file is already named qwerty.keymap from the previous step
           mv *.keymap "$GITHUB_WORKSPACE/${{ inputs.keymap_path }}/"
           ls -lR "$GITHUB_WORKSPACE/${{ inputs.keymap_path }}/"
 
