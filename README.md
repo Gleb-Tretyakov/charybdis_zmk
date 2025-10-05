@@ -1,326 +1,152 @@
-[![.github/workflows/build.yml](https://github.com/280Zo/charybdis-wireless-mini-zmk-firmware/actions/workflows/build.yml/badge.svg)](https://github.com/280Zo/charybdis-wireless-mini-zmk-firmware/actions/workflows/build.yml)
+# Конфигурация ZMK для клавиатуры Charybdis 4x6
 
-## Intro
+Этот репозиторий содержит кастомную прошивку ZMK для эргономичной сплит-клавиатуры Charybdis (версия 4x6 с 5+3 клавишами в тамб-кластерах и трекболом). Конфигурация создана с упором на продуктивность для программистов и менеджеров, которым важна скорость набора, удобство работы с текстом и минимальное количество лишних движений.
 
-This repository offers pre-configured ZMK firmware designed for Wireless Charybdis keyboards, supporting both the ubiquitous QWERTY layout and the optimized Colemak DH layout. You can choose from two configurations:
+## 🎯 Философия дизайна
 
-- Bluetooth and USB
-- Dongle
+Основная цель этой конфигурации — максимальная эффективность и комфорт. Это достигается за счет нескольких ключевых принципов:
 
-Additionally, this repository automatically generates SVG images of all layers in the keymap, and adds it to the README. It also provides high level instructions and resources on how to customize and build the firmware to meet your specific needs.
+1.  **Минимизация движений пальцев**: Основные символы и действия доступны на базовом слое или через простые комбинации.
+2.  **Home Row Mods**: Модификаторы (Shift, Ctrl, Alt, Cmd) расположены на "домашнем" ряду, что избавляет от необходимости тянуться к крайним клавишам.
+3.  **Слои для всего**: Логическое разделение функциональности по слоям (символы, навигация, цифры) позволяет держать руки в центральной позиции.
+4.  **Контекстно-зависимые клавиши**: Одна и та же клавиша может выполнять разные функции в зависимости от длительности нажатия (tap-hold).
+5.  **Комбинации (Combos)**: Часто используемые символы и команды (например, `ESC`, `Enter`, скобки) вводятся одновременным нажатием двух соседних клавиш.
 
-Check out the [Charybdis Mini Wireless build guide](https://github.com/280Zo/charybdis-wireless-mini-3x6-build-guide?tab=readme-ov-file) if you haven't yet built your own Charybdis keyboard.
+## 📚 Слои и раскладки
 
-## Usage
+В прошивке настроено несколько слоев. Переключение между ними осуществляется с помощью клавиш в тамб-кластерах.
 
-If you'd like to use the pre-built firmware the files can be found in the [Actions Workflows](https://github.com/280Zo/charybdis-wireless-mini-zmk-firmware/actions?query=is%3Acompleted+branch%3Amain). To download them, log into Github, click the link, select the latest run that passed on the main branch, and download the applicable firmware. There are five firmware artifacts to choose from. If you're unsure which one to use, you probably want the firmware-charybdis-qwerty build.
+### 1. `BASE` — Основной слой (Colemak-DH)
 
-- **firmware-charybdis-qwerty** - Bluetooth/USB with QWERTY layout
-- **firmware-charybdis-qwerty-dongle** - Dongle with QWERTY layout
-- **firmware-charybdis-colemak** - Bluetooth/USB with Colemak DH layout
-- **firmware-charybdis-colemak-dongle** - Dongle with Colemak DH layout
-- **firmware-reset-nanov2** - Reset the firmware completely
+Это слой по умолчанию, оптимизированный для комфортного набора текста на английском языке.
 
-There are a few things to note about how the pre-built firmware is configured:
-
-- ZMK has terms for each side of a split keyboard. Central is the half that sends keyboard outputs over USB or advertises to other devices over bluetooth. Peripheral is the half that will only send keystrokes to the central once they are paired and connected through bluetooth. The Bluetooth/USB firmware uses the right side as central.
-- The dongle firmware will have much better battery life for the central side, but requires an extra MCU and can only be connected through the dongle.
-- The Bluetooth/USB firmware can connect through Bluetooth, but the central side will have a shorter battery life because it needs to maintain that connection.
-  - The central side can also be plugged in to USB and the keyboard can be used when Bluetooth on the host computer isn't available (e.g. BIOS navigation)
-- To add support for the PMW3610 low power trackball sensor, badjeff's [zmk-pmw3610-driver](https://github.com/badjeff/zmk-pmw3610-driver), [ZMK Input Behavior Listener](https://github.com/badjeff/zmk-input-behavior-listener?tab=readme-ov-file), and [ZMK Split Peripheral Input Relay](https://github.com/badjeff/zmk-split-peripheral-input-relay) modules are included in the firmware.
-- eigatech's [zmk-configs](https://github.com/eigatech/zmk-config?tab=readme-ov-file) played a major role in getting badjeff's drivers and modules fully configured and are a great resource
-- A separate branch builds the Bluetooth/USB firmware using [inorichi's driver](https://github.com/inorichi/zmk-pmw3610-driver?tab=readme-ov-file) as an alternative to badjeff's driver.
-- Pete Johanson (creator and lead of the ZMK firmware) developed a feature ([pointers-move-scroll](https://github.com/zmkfirmware/zmk/pull/2027)) that allows mouse keys to move and scroll. A successor feature ([pointers-with-input-processors](https://github.com/zmkfirmware/zmk/pull/2477)) was then developed that allows more flexibility. This feature is what will eventually be merged into the main ZMK branch, and it's what is used by this repo to build the firmware. Although it's not guranteed to be stable, it hasn't caused any noticible issues. That being said, if you'd prefer to use pointers-move-scroll which is in a stable state, you can update the west.yaml and adapt the config files accordingly.
-
-## Flashing the Firmware
-
-Follow the steps below to flash the firmware
-
-- If you are flashing the firmware for the first time, or if you're switching between the dongle and the Bluetooth/USB configuration, flash the reset firmware to all the devices first
-- Unzip the firmware.zip
-- Plug the right half info the computer through USB
-- Double press the reset button
-- The keyboard will mount as a removable storage device
-- Copy the applicable uf2 file into the NICENANO storage device (e.g. charybdis_qwerty_dongle.uf2 -> dongle)
-- It will take a few seconds, then it will unmount and restart itself.
-- Repeat these steps for all devices.
-- You should now be able to use your keyboard
-
-> [!NOTE]  
-> If the keyboard halves aren't connecting as expected, try pressing the reset button on both halves at the same time. If that doesn't work, follow the [ZMK Connection Issues](https://zmk.dev/docs/troubleshooting/connection-issues#acquiring-a-reset-uf2) documentation for more troubleshooting steps.
-
-## Keymaps & Layers
-
-The base layer uses [home row mods](https://precondition.github.io/home-row-mods) to make typing as efficient and comfortable as possible. To reduce hand movement, extra attention has also been given to making sure cursor, scrolling, and mouse button operations are as seamless as possible.
-
-Review the layer maps below to see how each one functions. Then either modify the keymap to fit your needs, or start using these defaults to become more familiar with them.
-
-Here are a few tips for a quick start:
-
-- The bluetooth keys on the EXTRAS layer allow you to select which bluetooth pairing you want, BT-CLR clears the pairing on the selected profile.
-
-- The left most thumb button has multiple functions
-  - When held, the function of the trackball is changed from moving the cursor to scrolling.
-  - When double tapped, it will reduce the cursor speed for more precision, and activate the mouse layer.
-  - When single tapped it outputs the escape key.
-
-![keymap images](keymap-drawer/charybdis.svg)
-
-## Подробное описание Layout'а
-
-### 🎯 Философия дизайна
-
-Данная конфигурация построена на современных принципах эргономичного набора текста с акцентом на минимизацию движений рук и максимальное удобство. Основой служит раскладка **Colemak-DH** с множественными улучшениями для программистов и активных пользователей компьютера.
-
-### 🔧 Основные особенности
-
-#### **Home Row Mods (Модификаторы на домашнем ряду)**
-- **Левая рука**: `Cmd(C) Alt(I) Ctrl(E) Shift(A)`
-- **Правая рука**: `Shift(H) Ctrl(T) Alt(S) Cmd(N)`
-- **Кросс-хендовая активация**: модификаторы активируются только при нажатии клавиш противоположной руки
-- **Адаптивные настройки**: `175ms` tapping-term с балансированным флейвором для максимального комфорта
-
-#### **Умные комбинации (Combos)**
-Быстрый доступ к часто используемым клавишам без слоев:
-
-**Базовые действия:**
-- `ESC`: позиции 13+14 (средний ряд, левая рука)
-- `TAB`: позиции 25+26 (нижний ряд, левая рука) 
-- `ENTER`: позиции 33+34 (нижний ряд, правая рука)
-
-**Скобки (билатеральные):**
-- `()`: 3+4 и 7+8 (верхний ряд)
-- `[]`: 15+16 и 19+20 (средний ряд)
-- `{}`: 27+28 и 31+32 (нижний ряд)
-
-**Быстрые команды:**
-- `Ctrl+C` (копировать): 26+27
-- `Ctrl+V` (вставить): 27+28
-- `Ctrl+X` (вырезать): 25+26
-- `Ctrl+Z` (отменить): 24+25
-- `Ctrl+A` (выделить всё): 2+3
-
-#### **Адаптивные клавиши**
-- **Левый Ctrl/Esc**: при удержании — Ctrl, при нажатии — Esc
-- **Правый Shift/Enter**: при удержании — Shift, при нажатии — Enter
-- **Билатеральный Shift**: автоматически активирует Sticky Shift при нажатии на домашнем ряду
-
-### 📚 Описание слоёв
-
-#### **BASE** (Colemak-DH) - Основной слой
-```
-TAB  B Y O U '     - L D W V Z
-ESC  C I E A ,     . H T S N Q  
-SHF  G X J K /     ; R M F P ENT
-_    ALT SW CMD LANG    REP SYM NAV
-         SPC CLK RCK
-```
+| Левая рука | | | | | | Правая рука | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| ` | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 | Lock |
+| Tab | B | Y | O | U | ' | /? | L | D | W | V | Z |
+| Ctrl/Esc| **C** (Cmd)| **I** (Alt)| **E** (Ctrl)| **A** (Shift)| ,; | .: | **H** (Shift)| **T** (Ctrl)| **S** (Alt)| **N** (Cmd)| Q |
+| Shift | G | X | J | K | !\| | ; | R | M | F | P | Shift/Ent |
+| | | | Lang | **LOWER** (hold) | Cmd | Alt | **SYMB** (hold) | **NAV** (hold) | | |
+| | | | | LClick | RClick | | | | | | |
 
 **Особенности:**
-- Оптимизированная Colemak-DH раскладка
-- Умная пунктуация: `,` → `;` при Shift, `.` → `:` при Shift
-- Переключение языка на большом пальце
-- Трекбол интегрирован в layout
+- **Home Row Mods**: Клавиши `A, E, I, C` и `N, S, T, H` при удержании работают как модификаторы. Например, удержание `A` и нажатие `L` даст `Shift+L` (`L`). Это работает только "кросс-хендово" (модификатор на одной руке, клавиша на другой), чтобы избежать случайных срабатываний.
+- **Умные клавиши**:
+    - Левый мизинец: `Tap` = `ESC`, `Hold` = `Ctrl`.
+    - Правый мизинец: `Tap` = `Enter`, `Hold` = `Shift`.
+- **Переключение языка**: Клавиша `Lang` в левом тамб-кластере (`Cmd+Space` на macOS).
+- **Двойное нажатие на `Lang`**: переключает на слой `QWERTY`.
+- **Тройное нажатие на `Lang`**: переключает на слой `GAMING`.
 
-#### **LOWER** - Цифры и F-клавиши
-```
-`    1 2 3 4 5     6 7 8 9 0 DEL
-_    F1F2F3F4F5     F6 4 5 6 / *
-_    DT TB TB DT =  0 1 2 3 . _
-_    _ _ _ _         _ DEL _
-       _ _ _
-```
+### 2. `LOWER` — Цифры и F-клавиши
 
-**Удобства:**
-- Цифровая клавиатура на правой руке
-- F-клавиши на левой руке для быстрого доступа
-- Управление рабочими столами (DT = Desktop, TB = Tab)
+Активируется удержанием левой клавиши `LOWER` в тамб-кластере.
 
-#### **SYMB** - Символы и программирование
-```
-~    ! @ # $ %     ^ & [ ] % BS
-`    | - + = #     => : ( ) ? '
-_    ^ / * \ |>    ~ $ { } ! _
-_    _ _ _ _         _ _ _
-       SPC _ _
-```
+| Левая рука | | | | | | Правая рука | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10 | F11 | F12 |
+| ` | ! | @ | # | $ | % | ^ | **7** | **8** | **9** | + | * |
+| --- | & | ( | ) | _ | - | = | **4** | **5** | **6** | . | / |
+| --- | \| | [ | ] | { | } | **0** | **1** | **2** | **3** | , | --- |
+| | | | --- | --- | --- | --- | `Del` | --- | | | |
 
-**Программерские фишки:**
-- Стрелочная функция `=>` на одной клавише
-- Pipe operator `|>` для функционального программирования
-- Все скобки под правой рукой для быстрого доступа
-- Математические операторы на левой руке
+**Особенности:**
+- Удобный цифровой блок (Numpad) под правой рукой.
+- F-клавиши на верхнем ряду.
+- Основные математические операторы.
 
-#### **NAV** - Навигация и медиа
-```
-SW   PR PP NX VU+ SS   PU WL ↑ WR MAX MIN
-_    CMD ALT CTL SHF V-  PD ← ↓ → HOME END
-_    SP AP CUT CP PST   UND HM END INS DEL _
-_    _ _ _ _             _ _ _
-       _ _ _
-```
+### 3. `SYMB` — Символы для программирования
 
-**Продвинутая навигация:**
-- Автоповтор для стрелок при удержании
-- Управление окнами (WL=влево, WR=вправо, MAX=максимизация)
-- Медиа контроль и громкость
-- App Switcher (CMD+TAB) и Swapper (ALT+TAB)
+Активируется удержанием правой клавиши `SYMB` в тамб-кластере.
 
-#### **MOUSE** - Управление трекболом
-```
-_    _ _ _ _ _       _ SL ↑ SR _ _
-_    _ _ _ _ _       _ ← ↓ ↑ → _
-_    _ _ _ _ _       _ _ ↓ _ _ _
-_    _ _ _ TGL       RC LC TGL
-       LC MC RC
-```
+| Левая рука | | | | | | Правая рука | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ~ | ! | < | > | " | \| | & | _ | [ | ] | % | Bksp |
+| ` | @ | - | + | = | # | \| | : | ( | ) | ? | ' |
+| --- | ^ | / | * | \ | | ~ | $ | { | } | @ | --- |
+| | | | --- | `Space` | --- | --- | --- | --- | | | |
 
-**Трекбол возможности:**
-- Точное управление курсором
-- Скролл в 4 направлениях
-- Переключение между режимами курсора и скролла
+**Особенности:**
+- Все виды скобок, операторы и символы, часто используемые в коде.
+- Дублирование некоторых символов для удобства.
 
-### 🚀 Макросы и автоматизация
+### 4. `NAV` — Навигация и управление системой
 
-#### **Управление окнами (macOS оптимизация)**
-- `win_left/right`: разделение окон пополам
-- `win_max`: максимизация окна
-- `win_min`: минимизация окна
-- `screenshot`: скриншот области (CMD+SHIFT+4)
+Активируется удержанием крайней правой клавиши `NAV` в тамб-кластере.
 
-#### **Навигация по системе**
-- `lang_switch`: переключение языка (CMD+SPACE)
-- `next/prev_desktop`: переключение рабочих столов
-- `next/prev_tab`: навигация между вкладками
-- `spotlight`: поиск Spotlight
+| Левая рука | | | | | | Правая рука | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Alt+Tab | Prev | Play | Next | Vol+ | ScrShot | PgUp | Win Left | **Up** | Win Right | Win Max | --- |
+| --- | Home | PgDn | PgUp | End | Vol- | PgDn | **Left** | **Down** | **Right** | Home | --- |
+| --- | Prev Dsk| Save | Sel Word| Next Dsk| Mute | Sel Line | Home | End | Ins | Del | --- |
+| | | | --- | --- | --- | --- | --- | --- | | | |
 
-#### **Программирование**
-- `arrow_macro`: `=>` для стрелочных функций
-- `pipe_op`: `|>` для pipe операторов
-- `fat_arrow`: улучшенная стрелочная функция
+**Особенности:**
+- Полное управление курсором (стрелки), страницами (`PgUp`/`PgDn`), и позицией в строке (`Home`/`End`).
+- Управление окнами (привязка к краям экрана, максимизация).
+- Управление медиа и громкостью.
+- Переключение между рабочими столами (`Prev Dsk`/`Next Dsk`).
+- Макросы для выделения слова (`Sel Word`) и строки (`Sel Line`).
 
-### 💡 Продвинутые возможности
+### 5. `QWERTY` и `GAMING`
 
-#### **Условные слои**
-- При одновременной активации LOWER + SYMB автоматически активируется ADJUST
-- NAV + FUNC также ведёт к слою ADJUST
+- **`QWERTY`**: Стандартная раскладка для совместимости. Переключение — двойной тап по клавише `Lang`. Возврат на `BASE` (Colemak-DH) — клавиша `to BASE` в левом тамб-кластере.
+- **`GAMING`**: Упрощенная QWERTY без сложных поведений (home-row mods отключены) для игр. Переключение — тройной тап по клавише `Lang`.
 
-#### **Sticky Keys и Oneshot**
-- Sticky Shift: одно нажатие активирует Shift для следующей клавиши
-- Oneshot layer: быстрый доступ к слоям без удержания
-- Caps Word: умная активация заглавных букв для слов
+### 6. `MOUSE` — Управление курсором и скроллом
 
-#### **Swapper для Alt-Tab**
-- Tri-state поведение для удобной навигации между приложениями
-- Автоматическое освобождение модификатора
+Активируется через комбо `позиция 40 + 41` (две нижние центральные клавиши большого пальца).
 
-### 🎮 Практические советы использования
+- **Движение курсора**: через трекбол (по умолчанию).
+- **Движение мыши клавишами**: на слое `MOUSE` стрелки управляют курсором.
+- **Скролл**: на слое `MOUSE` доступны `SCRL_UP` и `SCRL_DOWN`.
 
-#### **Для программистов:**
-1. Используйте home row mods для быстрого доступа к модификаторам
-2. Комбо для скобок экономят время при написании кода
-3. Символьный слой оптимизирован для популярных языков программирования
+### 7. `ADJUST` — Настройки
 
-#### **Для продуктивной работы:**
-1. Навигационный слой позволяет не отрывать руки от клавиатуры
-2. Оконный менеджмент через макросы ускоряет workflow
-3. Быстрые команды (копировать/вставить) через комбо
+Скрытый слой, который активируется при одновременном удержании `LOWER` и `SYMB`. Позволяет управлять Bluetooth-соединениями, сбрасывать клавиатуру и т.д.
 
-#### **Для удобства набора:**
-1. Адаптивные клавиши уменьшают необходимость в дополнительных модификаторах
-2. Caps Word автоматически отключается после слова
-3. Sticky keys для одноразового использования модификаторов
+## 🚀 Ключевые функции для продуктивности
 
-### 🔄 Переключение между раскладками
+- **Combos (Комбинации)**:
+    - `ESC`: две левые центральные клавиши на среднем ряду.
+    - `Tab`: две левые центральные клавиши на нижнем ряду.
+    - `Enter`: две правые центральные клавиши на нижнем ряду.
+    - `()`, `[]`, `{}`: комбинации на верхнем, среднем и нижнем рядах соответственно.
+    - `->` и `=>`: макросы для стрелочных функций.
+- **Caps Word**: Активируется двойным тапом по `Shift`. Включает `CAPS LOCK` на одно слово и автоматически отключается.
+- **Макросы**:
+    - `lock_screen`: Блокировка экрана (macOS).
+    - `screenshot`: Скриншот области экрана.
+    - `select_word`, `select_line`: Выделение слова или строки.
+    - `win_left`/`win_right`/`win_max`: Управление окнами.
+    - `next_desktop`/`prev_desktop`: Навигация по рабочим столам.
 
-В конфигурации доступны две основные раскладки:
-- **BASE**: Colemak-DH (по умолчанию, оптимизированная)
-- **QWERTY**: для совместимости и привычности
+## 👍 Плюсы и 👎 Минусы для программиста/менеджера
 
-Переключение происходит через комбинацию или слой ADJUST.
+### Плюсы:
 
-### ⚡ Оптимизация производительности
+1.  **Эргономика и скорость**: Раскладка Colemak-DH и Home Row Mods значительно снижают нагрузку на кисти и увеличивают скорость набора после периода адаптации.
+2.  **Эффективность в коде**: Быстрый доступ ко всем видам скобок, операторам и символам через слой `SYMB` и комбинации. Не нужно тянуться и отрывать руки от основного ряда.
+3.  **Удобная навигация**: Слой `NAV` полностью заменяет мышь для навигации по коду, тексту и системе. Это идеально для работы в IDE, терминале и текстовых редакторах.
+4.  **Многозадачность**: Быстрое переключение между рабочими столами и окнами с помощью макросов ускоряет работу с тикетами, мессенджерами и несколькими проектами одновременно.
+5.  **Трекбол**: Интегрированный трекбол — отличное решение для задач, где без курсора не обойтись, при этом руки остаются на клавиатуре.
 
-- **Требование покоя**: 100ms перед активацией hold-tap поведений
-- **Быстрые нажатия**: 125ms для quick-tap
-- **Баланс**: flavor "balanced" для оптимального отклика
-- **Cross-hand only**: home row mods активируются только противоположной рукой
+### Минусы:
 
-Данная конфигурация создана для максимального комфорта и производительности, сочетая лучшие практики современного эргономичного набора с мощными возможностями ZMK.
+1.  **Кривая обучения**: Переход на Colemak-DH и привыкание к Home Row Mods требует времени и терпения. Первое время продуктивность может упасть.
+2.  **Сложность для новичков**: Большое количество слоев и кастомных поведений может показаться ошеломляющим.
+3.  **Зависимость от своей клавиатуры**: Работать на стандартной клавиатуре после привыкания к такой конфигурации становится неудобно.
+4.  **Случайные срабатывания**: Home Row Mods и tap-hold функции могут иногда срабатывать случайно, пока вы не привыкнете к нужным таймингам нажатий.
 
-## Modify Key Mappings
+## 🛠️ Как этим пользоваться?
 
-### ZMK Studio
+1.  **Начните с `BASE` слоя**. Постарайтесь как можно реже убирать руки с "домашнего" ряда.
+2.  **Освойте Home Row Mods**. Практикуйтесь в наборе текста, используя модификаторы на `A,S,D,F` и `J,K,L,;` (для QWERTY) или `A,E,I,C` и `N,S,T,H` (для Colemak).
+3.  **Изучите слои `LOWER` и `SYMB`**. Запомните расположение ключевых символов для вашей работы.
+4.  **Активно используйте слой `NAV`**. Попробуйте отказаться от мыши для навигации по тексту.
+5.  **Практикуйте комбинации (combos)**. Это один из самых быстрых способов ввода частых символов.
 
-[ZMK Studio](https://zmk.studio/) allows users to update functionality during runtime. It's currently in beta, but the physical layout and updated config files are included in the BT/USB firmware for testing. The dongle firmware does not have this integration at the moment.
+Эта конфигурация — мощный инструмент, который при должном освоении может значительно повысить вашу продуктивность и комфорт при работе за компьютером.
 
-To change the visual layout of the keys, the physical layout must be updated. This is the charybdis-layouts.dtsi file, which handles the actual physical positions of the keys. Though they may appear to be similar, this is different than the matrix transform file (charybdis.json) which handles the electrical matrix to keymap relationship.
-
-To easily modify the physical layout, or convert a matrix transform file, [caksoylar](https://github.com/caksoylar/zmk-physical-layout-converter) has built the [ZMK physical layouts converter](https://zmk-physical-layout-converter.streamlit.app/).
-
-For more details on how to use ZMK Studio, refer to the [ZMK documentation](https://zmk.dev/docs/features/studio).
-
-### Keymap GUI
-
-Using a GUI to generate the keymap file before building the firmware is another easy way to modify the key mappings. Head over to nickcoutsos' keymap editor and follow the steps below.
-
-- Fork/Clone this repo
-- Open a new tab to the [keymap editor](https://nickcoutsos.github.io/keymap-editor/)
-- Give it permission to see your repo
-- Select the branch you'd like to modify
-- Update the keys to match what you'd like to use on your keyboard
-- Save
-- Wait for the pipeline to run
-- Download and flash the new firmware
-
-### Edit Keymap Directly
-
-To change a key layout choose a behavior you'd like to assign to a key, then choose a parameter code. This process is more clearly outlined on ZMK's [Keymaps & Behaviors](https://zmk.dev/docs/features/keymaps) page.
-
-- Behaviors are all documented on the [Behaviors Overview](https://zmk.dev/docs/behaviors)
-- Codes are all documented on the [keycodes](https://zmk.dev/docs/codes) page
-
-Open the keymap file and change keys, or add/remove layers, then merge the changes and re-flash the keyboard with the updated firmware.
-
-## Changing the Central and Peripheral Assignments
-
-Follow the ZMK documentation [Kconfig.deconfig](https://zmk.dev/docs/development/new-shield#kconfigdefconfig) to change which keyboard half is the central and which is the peripheral. This does not apply to the dongle configuration.
-
-## Changing the Keyboard Name
-
-Follow the ZMK [Kconfig.defconfig](https://zmk.dev/docs/development/new-shield#kconfigdefconfig) section to update the keyboard name. Make sure to read about the danger in exceeding the 16 character limit.
-
-## Building Your Own Firmware
-
-ZMK provides a comprehensive guide to follow when creating a [New Keyboard Shield](https://zmk.dev/docs/development/new-shield). I'll touch on some of the points here, but their docs should be what you reference when you're building your own firmware.
-
-### File Structure
-
-When building the ZMK firmware, the files need to be located in the correct place. The formats and locations of the files can be found on ZMK's [Configuration Overview](https://zmk.dev/docs/config).
-
-### Mapping GPIO Pins to Keys
-
-To set up some of the configuration files it requires a knowledge of which keys connect to which pins on the MCU (see the [Shield Overlays](https://zmk.dev/docs/development/new-shield#shield-overlays) section), and how the rows and columns are wired.
-
-To get this information, look at the PCB kcad files and follow the traces from key pads, to row and column through holes, to MCU through holes. Once you have that information you can update the applicable dtsi/overlay files.
-
-## Creating Graphical Key Maps
-
-This repo uses the excellent work of caksoylar's [Keymap Drawer](https://keymap-drawer.streamlit.app/) to automatically generate a key mapping of each layer when the Github Actions are run.
-
-## Upcoming ZMK Features
-
-ZMK is actively being developed and there are a few features that will be added to these builds if/when they are approved.
-
-- Layer Lock - [Open PR](https://github.com/zmkfirmware/zmk/pull/1984)
-- Unicode Support - [Issue](https://github.com/zmkfirmware/zmk/issues/232)
-
-## Credits
-
-- [eigatech](https://github.com/eigatech)
-- [badjeff](https://github.com/badjeff)
-- [inorichi](https://github.com/inorichi)
-- [manna-harbour](https://github.com/manna-harbour)
-- [nickcoutsos](https://github.com/nickcoutsos/keymap-editor)
-- [Petejohanson](https://github.com/petejohanson)
-- [caksoylar](https://github.com/caksoylar/keymap-drawer)
