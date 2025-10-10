@@ -1104,7 +1104,7 @@
     &kp F1             &kp F2             &kp F3             &kp F4             &kp F5             &kp F6                                                     &kp F7             &kp F8             &kp F9             &kp F10            &kp F11              &kp F12
     &kp GRAVE          &kp EXCL           &kp AT             &kp HASH           &kp DLLR           &kp PRCNT                                                  &kp CARET          &kp N7             &kp N8             &kp N9             &kp PLUS             &kp STAR
     &mt_lctl_esc LCTRL ESC &hml LGUI AMPS     &hml LALT LPAR     &hml LCTRL RPAR    &hml LSHFT UNDER   &kp MINUS                                                  &kp EQUAL          &hmr RSHFT N4      &hmr RCTRL N5      &hmr RALT N6       &hmr RGUI DOT        &kp FSLH
-    &dt_shift          &kp PIPE           &kp LBKT           &kp RBKT           &kp LBRC           &kp RBRC                                                   &kp N0             &kp N1             &kp N2             &kp N3             &kp COMMA            &mt_rsft_ent RSHFT ENTER
+    &bootloader        &kp PIPE           &kp LBKT           &kp RBKT           &kp LBRC           &kp RBRC                                                   &kp N0             &kp N1             &kp N2             &kp N3             &kp COMMA            &mt_rsft_ent RSHFT ENTER
                                                               &trans             &trans             &trans                                                     &trans             &kp DEL            &trans
                                                                                  &trans             &trans
             >;
