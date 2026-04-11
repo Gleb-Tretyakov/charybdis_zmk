@@ -3,3 +3,43 @@ config SHIELD_CHARYBDIS_LEFT
 
 config SHIELD_CHARYBDIS_RIGHT
 	def_bool $(shields_list_contains,charybdis_right)
+
+if SHIELD_CHARYBDIS_RIGHT
+
+config PMW3610
+	bool
+
+config PMW3610_SMART_ALGORITHM
+	bool
+
+config PMW3610_SWAP_XY
+	bool
+
+config PMW3610_INVERT_X
+	bool
+
+config PMW3610_INVERT_Y
+	bool
+
+config PMW3610_REPORT_INTERVAL_MIN
+	int
+
+config PMW3610_REST1_SAMPLE_TIME_MS
+	int
+
+config PMW3610_REST2_SAMPLE_TIME_MS
+	int
+
+config PMW3610_REST3_SAMPLE_TIME_MS
+	int
+
+config PMW3610_RUN_DOWNSHIFT_TIME_MS
+	int
+
+config PMW3610_REST1_DOWNSHIFT_TIME_MS
+	int
+
+config PMW3610_REST2_DOWNSHIFT_TIME_MS
+	int
+
+endif
