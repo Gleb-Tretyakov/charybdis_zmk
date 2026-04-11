@@ -221,7 +221,7 @@ layers:
   - '&lt 9 (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_SLASH_AND_QUESTION_MARK))'
   - RSHIFT
   - {t: TAB, h: MAC-NUM}
-  - {t: SPACE, h: Ctl+ LEFT ALT}
+  - {t: SPACE, h: Gui+ LEFT ALT}
   - {t: LEFT GUI, h: MAC-NAV}
   - {t: ENTER, h: MAC-NUM}
   - {t: BACK SPACE, h: Alt+Ctl+ LEFT GUI}
@@ -344,47 +344,47 @@ layers:
   - {t: ▽, type: trans}
   GAME:
   - ESCAPE
+  - (ZMK HID USAGE(HID USAGE KEY, HID USAGE KEY KEYBOARD GRAVE ACCENT AND TILDE))
   - '1'
   - '2'
   - '3'
-  - '4'
-  - '5'
+  - {t: '4', h: '5'}
   - '6'
   - '7'
   - '8'
   - '9'
   - '0'
   - ((ZMK HID USAGE(HID USAGE KEY, HID USAGE KEY KEYBOARD MINUS AND UNDERSCORE)))
+  - T
   - TAB
   - Q
   - W
   - E
-  - R
-  - T
+  - {t: R, h: T}
   - (ZMK HID USAGE(HID USAGE KEY, HID USAGE KEY KEYBOARD Y))
   - U
   - I
   - O
   - P
   - (ZMK HID USAGE(HID USAGE KEY, HID USAGE KEY KEYBOARD LEFT BRACKET AND LEFT BRACE))
-  - DELETE
-  - {t: A, h: LEFT CONTROL}
+  - G
+  - LEFT SHIFT
+  - A
   - S
   - D
-  - F
-  - G
+  - {t: F, h: G}
   - H
   - {t: J, h: RIGHT SHIFT}
   - {t: K, h: RIGHT GUI}
   - {t: L, h: RIGHT ALT}
   - '&hmr RIGHT_CONTROL (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_SEMICOLON_AND_COLON))'
   - (ZMK HID USAGE(HID USAGE KEY, HID USAGE KEY KEYBOARD APOSTROPHE AND QUOTE))
-  - LEFT SHIFT
-  - '&lt 9 (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_Z))'
-  - {t: X, h: LEFT ALT}
-  - {t: C, h: LEFT GUI}
-  - {t: V, h: LEFT SHIFT}
   - B
+  - '&hml LEFT_CONTROL (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_NON_US_BACKSLASH_AND_PIPE))'
+  - {t: Y, h: LEFT ALT}
+  - {t: X, h: LEFT GUI}
+  - {t: C, h: LEFT SHIFT}
+  - {t: V, h: B}
   - N
   - {t: M, h: RIGHT SHIFT}
   - '&hmr RIGHT_GUI (ZMK_HID_USAGE(HID_USAGE_KEY, HID_USAGE_KEY_KEYBOARD_COMMA_AND_LESS_THAN))'
@@ -542,24 +542,24 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+  - LEFT SHIFT
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - RIGHT SHIFT
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+  - LEFT SHIFT
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - RIGHT SHIFT
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
