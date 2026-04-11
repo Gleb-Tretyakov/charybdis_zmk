@@ -545,6 +545,21 @@
             bindings = <&kp SPACE>, <&vscode_search>, <&spotlight>;
         };
 
+        // BT Clear tap-dance (5 taps) — работает независимо на каждой половине
+        dt_bt_clr_l: dt_bt_clr_l {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <350>;
+            bindings = <&kp GRAVE>, <&none>, <&none>, <&none>, <&bt BT_CLR>;
+        };
+
+        dt_bt_clr_r: dt_bt_clr_r {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <350>;
+            bindings = <&lock_screen>, <&none>, <&none>, <&none>, <&bt BT_CLR>;
+        };
+
         // Mod morphs для символов
         comma_semi: comma_semicolon {
             compatible = "zmk,behavior-mod-morph";
@@ -1089,7 +1104,7 @@
         // Основной слой (QWERTY)
         BASE {
             bindings = <
-    &kp GRAVE          &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &lock_screen
+    &dt_bt_clr_l       &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &dt_bt_clr_r
     &kp TAB            &kp Q              &kp W              &kp E              &kp R              &kp T                                                      &kp Y              &kp U              &kp I              &kp O              &kp P                &kp LBKT
     &mt_lctl_esc LCTRL ESC  &hml LGUI A   &hml LALT S        &hml LCTRL D       &hml LSHFT F       &kp G                                                      &kp H              &hmr RSHFT J       &hmr RCTRL K       &hmr RALT L        &hmr RGUI SEMI       &kp SQT
     &dt_shift          &kp Z              &kp X              &kp C              &kp V              &kp B                                                      &kp N              &kp M              &comma_semi        &dot_colon         &kp FSLH             &mt_rsft_ent RSHFT ENTER
