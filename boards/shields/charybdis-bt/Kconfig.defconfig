@@ -9,14 +9,6 @@ config ZMK_KEYBOARD_NAME
 config ZMK_SPLIT_BLE_ROLE_CENTRAL
 	default y
 
-# Enable PMW3610 driver for right side trackball
-if SHIELD_CHARYBDIS_RIGHT
-
-config PMW3610
-	default y
-
-endif # SHIELD_CHARYBDIS_RIGHT
-
 endif
 
 if SHIELD_CHARYBDIS_LEFT || SHIELD_CHARYBDIS_RIGHT
