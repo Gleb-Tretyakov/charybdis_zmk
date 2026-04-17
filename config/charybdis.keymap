@@ -161,14 +161,6 @@
             layers = <BASE>;
         };
         
-        // Быстрый доступ к слоям
-        combo_mouse {
-            timeout-ms = <50>;
-            key-positions = <40 41>;
-            bindings = <&tog MOUSE>;
-            layers = <BASE>;
-        };
-        
         // Частые символы программирования (только QWERTY слой)
         combo_arrow {
             timeout-ms = <40>;
@@ -543,6 +535,21 @@
             #binding-cells = <0>;
             tapping-term-ms = <200>;
             bindings = <&kp SPACE>, <&vscode_search>, <&spotlight>;
+        };
+
+        // BT Clear tap-dance (5 taps) — работает независимо на каждой половине
+        dt_bt_clr_l: dt_bt_clr_l {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <350>;
+            bindings = <&kp GRAVE>, <&none>, <&none>, <&none>, <&bt BT_CLR>;
+        };
+
+        dt_bt_clr_r: dt_bt_clr_r {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <350>;
+            bindings = <&lock_screen>, <&none>, <&none>, <&none>, <&bt BT_CLR>;
         };
 
         // Mod morphs для символов
@@ -1089,7 +1096,7 @@
         // Основной слой (QWERTY)
         BASE {
             bindings = <
-    &kp GRAVE          &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &lock_screen
+    &dt_bt_clr_l       &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                                                     &kp N6             &kp N7             &kp N8             &kp N9             &kp N0               &dt_bt_clr_r
     &kp TAB            &kp Q              &kp W              &kp E              &kp R              &kp T                                                      &kp Y              &kp U              &kp I              &kp O              &kp P                &kp LBKT
     &mt_lctl_esc LCTRL ESC  &hml LGUI A   &hml LALT S        &hml LCTRL D       &hml LSHFT F       &kp G                                                      &kp H              &hmr RSHFT J       &hmr RCTRL K       &hmr RALT L        &hmr RGUI SEMI       &kp SQT
     &dt_shift          &kp Z              &kp X              &kp C              &kp V              &kp B                                                      &kp N              &kp M              &comma_semi        &dot_colon         &kp FSLH             &mt_rsft_ent RSHFT ENTER
@@ -1105,7 +1112,7 @@
     &kp GRAVE          &kp EXCL           &kp AT             &kp HASH           &kp DLLR           &kp PRCNT                                                  &kp CARET          &kp N7             &kp N8             &kp N9             &kp PLUS             &kp STAR
     &mt_lctl_esc LCTRL ESC &hml LGUI AMPS     &hml LALT LPAR     &hml LCTRL RPAR    &hml LSHFT UNDER   &kp MINUS                                                  &kp EQUAL          &hmr RSHFT N4      &hmr RCTRL N5      &hmr RALT N6       &hmr RGUI DOT        &kp FSLH
     &bootloader        &kp PIPE           &kp LBKT           &kp RBKT           &kp LBRC           &kp RBRC                                                   &kp N0             &kp N1             &kp N2             &kp N3             &kp COMMA            &mt_rsft_ent RSHFT ENTER
-                                                              &trans             &trans             &trans                                                     &trans             &kp DEL            &trans
+                                                              &mo SYMB           &trans             &trans                                                     &trans             &kp DEL            &mo SYMB
                                                                                  &trans             &trans
             >;
         };
@@ -1114,10 +1121,10 @@
         SYMB {
             bindings = <
     &trans             &trans             &trans             &trans             &trans             &trans                                                     &kp N1             &kp N2             &kp N3             &kp N4             &kp N5               &trans
-    &kp LS(NONUS_BSLH)          &kp EXCL           &kp LT             &kp GT             &kp DQT            &kp PIPE                                                   &kp AMPS        &kp UNDER          &kp LBKT           &kp RBKT           &kp PRCNT            &kp AMPS
+    &kp LS(GRAVE)               &kp EXCL           &kp LT             &kp GT             &kp DQT            &kp PIPE                                                   &kp AMPS        &kp UNDER          &kp LBKT           &kp RBKT           &kp PRCNT            &kp AMPS
     &mt_lctl_esc LCTRL ESC &hml LGUI AT       &hml LALT MINUS    &hml LCTRL PLUS    &hml LSHFT EQUAL   &kp HASH                                                   &kp PIPE        &hmr RSHFT COLON   &hmr RCTRL LPAR    &hmr RALT RPAR     &hmr RGUI QMARK      &kp SQT
-    &dt_shift          &kp CARET          &kp FSLH           &kp STAR           &kp BSLH           &none                                                      &kp LS(NONUS_BSLH)       &kp DLLR           &kp LBRC           &kp RBRC           &kp AT               &mt_rsft_ent RSHFT ENTER
-                                                              &trans             &kp SPACE          &trans                                                     &trans             &trans             &trans
+    &dt_shift          &kp CARET          &kp FSLH           &kp STAR           &kp BSLH           &none                                                      &kp LS(GRAVE)            &kp DLLR           &kp LBRC           &kp RBRC           &kp AT               &mt_rsft_ent RSHFT ENTER
+                                                              &mo LOWER          &kp SPACE          &trans                                                     &trans             &trans             &mo LOWER
                                                                                  &trans             &trans
             >;
         };

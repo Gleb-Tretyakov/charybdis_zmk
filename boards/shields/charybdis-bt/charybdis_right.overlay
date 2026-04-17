@@ -1,5 +1,6 @@
 #include "charybdis.dtsi"
 #include "charybdis_pmw3610.dtsi"
+#include <input/processors.dtsi>
 
 // The matrix transform is 6 columns over because the left half is 6 columns wide.
 &default_transform {
@@ -40,5 +41,7 @@
   trackball_listener {
     compatible = "zmk,input-listener";
     device = <&trackball>;
+    // Auto-activate MOUSE layer (7) for 500ms on trackball movement
+    input-processors = <&zip_temp_layer 7 500>;
   };
 };
