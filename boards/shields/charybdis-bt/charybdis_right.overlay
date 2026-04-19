@@ -1,6 +1,5 @@
 #include "charybdis.dtsi"
 #include "charybdis_pmw3610.dtsi"
-#include <input/processors.dtsi>
 
 // The matrix transform is 6 columns over because the left half is 6 columns wide.
 &default_transform {
@@ -36,12 +35,10 @@
     status = "okay";
 };
 
-// https://github.com/badjeff/zmk-pmw3610-driver
 / {
-  trackball_listener {
-    compatible = "zmk,input-listener";
+  input_relay_config_trackball {
+    compatible = "zmk,split-peripheral-input-relay";
     device = <&trackball>;
-    // Auto-activate MOUSE layer (7) for 500ms on trackball movement
-    input-processors = <&zip_temp_layer 7 500>;
+    relay-channel = <111>;
   };
 };
