@@ -1,6 +1,9 @@
 #include "charybdis.dtsi"
 #include <input/processors.dtsi>
 
+#define SNIPER 8
+#define SCROLL 9
+
 &kscan0 {
 	compatible = "zmk,kscan-gpio-matrix";
 
@@ -37,5 +40,19 @@
 		compatible = "zmk,input-listener";
 		device = <&vtrackball>;
 		input-processors = <&zip_temp_layer 7 500>;
+	};
+
+	trackball_sniper_listener {
+		compatible = "zmk,input-listener";
+		device = <&vtrackball>;
+		layers = <SNIPER>;
+		input-processors = <&zip_xy_scaler 1 4 1 4>;
+	};
+
+	trackball_scroll_listener {
+		compatible = "zmk,input-listener";
+		device = <&vtrackball>;
+		layers = <SCROLL>;
+		input-processors = <&zip_scroll_transform 1>;
 	};
 };
