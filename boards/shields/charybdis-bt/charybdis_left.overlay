@@ -1,5 +1,4 @@
 #include "charybdis.dtsi"
-#include <input/processors.dtsi>
 
 &kscan0 {
 	compatible = "zmk,kscan-gpio-matrix";
@@ -20,9 +19,4 @@
                 , <&pro_micro 4  GPIO_ACTIVE_HIGH>
                 , <&pro_micro 9 GPIO_ACTIVE_HIGH>
                 ;
-};
-
-&trackball_listener {
-	status = "okay";
-	input-processors = <&zip_temp_layer 7 500>;
 };
