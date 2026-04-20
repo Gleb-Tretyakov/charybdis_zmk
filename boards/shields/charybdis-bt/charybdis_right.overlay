@@ -1,5 +1,6 @@
 #include "charybdis.dtsi"
 #include "charybdis_pmw3610.dtsi"
+#include <input/processors.dtsi>
 
 // The matrix transform is 6 columns over because the left half is 6 columns wide.
 &default_transform {
@@ -35,6 +36,22 @@
     status = "okay";
 };
 
-&trackball_split {
-    device = <&trackball>;
+/ {
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+        input-processors = <&zip_temp_layer 7 500>;
+
+        sniper {
+            layers = <8>;
+            input-processors = <&zip_xy_scaler 1 3>;
+            process-next;
+        };
+
+        scroller {
+            layers = <9>;
+            input-processors = <&zip_xy_to_scroll_mapper>;
+            process-next;
+        };
+    };
 };
