@@ -19,6 +19,8 @@
 #define COLEMAK_DH 5
 #define GAMING 6
 #define MOUSE 7
+#define SNIPER 8
+#define SCROLL 9
 
 // Оптимизированные глобальные настройки
 &lt {
@@ -1183,9 +1185,31 @@
     &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &trans             &trans             &trans               &trans
     &trans             &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &msc SCRL_UP       &trans             &trans               &trans
     &mt_lctl_esc LCTRL ESC &trans             &trans             &trans             &trans             &trans                                                     &trans             &mmv MOVE_LEFT     &mmv MOVE_DOWN     &mmv MOVE_UP       &mmv MOVE_RIGHT      &trans
-    &dt_shift          &trans             &trans             &trans             &trans             &trans                                                     &trans             &trans             &msc SCRL_DOWN     &trans             &trans               &mt_rsft_ent RSHFT ENTER
-                                                              &tog MOUSE         &mkp LCLK          &mkp MCLK                                                  &mkp RCLK          &mkp LCLK          &tog MOUSE
-                                                                                 &trans             &trans
+    &dt_shift          &tog SCROLL        &tog SNIPER        &trans             &trans             &trans                                                     &trans             &trans             &msc SCRL_DOWN     &trans             &trans               &mt_rsft_ent RSHFT ENTER
+                                                              &trans             &trans             &trans                                                     &mkp RCLK          &mkp LCLK          &mo NAV
+                                                                                 &tog MOUSE         &trans
+            >;
+        };
+
+        SNIPER {
+            bindings = <
+    &trans  &trans  &trans  &trans  &trans  &trans                                                     &trans  &trans  &trans  &trans  &trans  &trans
+    &trans  &trans  &trans  &trans  &trans  &trans                                                     &trans  &trans  &trans  &trans  &trans  &trans
+    &trans  &trans  &trans  &trans  &trans  &trans                                                     &trans  &trans  &trans  &trans  &trans  &trans
+    &trans  &trans  &trans  &trans  &trans  &trans                                                     &trans  &trans  &trans  &trans  &trans  &trans
+                                            &trans  &trans  &trans                     &trans  &trans  &trans
+                                                    &trans  &trans
+            >;
+        };
+
+        SCROLL {
+            bindings = <
+    &trans  &trans  &trans  &trans  &trans  &trans                                                     &trans  &trans  &trans  &trans  &trans  &trans
+    &trans  &trans  &trans  &trans  &trans  &trans                                                     &trans  &trans  &trans  &trans  &trans  &trans
+    &trans  &trans  &trans  &trans  &trans  &trans                                                     &trans  &trans  &trans  &trans  &trans  &trans
+    &trans  &trans  &trans  &trans  &trans  &trans                                                     &trans  &trans  &trans  &trans  &trans  &trans
+                                            &trans  &trans  &trans                     &trans  &trans  &trans
+                                                    &trans  &trans
             >;
         };
     };
